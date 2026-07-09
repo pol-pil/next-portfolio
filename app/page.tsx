@@ -13,7 +13,7 @@ function Home() {
             <div className='fixed inset-0 z-0'>
                <ImageTrail
                   key='image-trail'
-                  items={['/cleanrot7.avif', '/varre8.avif', '/juliana.avif', '/jane9.avif', '/resto.avif']}
+                  items={['/cleanrot7.avif', '/vp1.avif', '/juliana.avif', '/jane9.avif', '/resto.avif']}
                   variant={1}
                />
             </div>
