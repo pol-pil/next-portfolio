@@ -198,20 +198,21 @@ export const ThemeToggleButton2 = ({
 }: {
   className?: string
 }) => {
-  const [isDark, setIsDark] = useState(
-     () => document.documentElement.classList.contains('dark')
-  )
+  const [isDark, setIsDark] = useState(false); // safe default, no `document` access at render time
 
   useEffect(() => {
-     const observer = new MutationObserver(() => {
-        setIsDark(document.documentElement.classList.contains('dark'))
-     })
-     observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class'],
-     })
-     return () => observer.disconnect()
+    setIsDark(document.documentElement.classList.contains('dark')); // set actual value after mount, client-only
+
+    const observer = new MutationObserver(() => {
+       setIsDark(document.documentElement.classList.contains('dark'))
+    })
+    observer.observe(document.documentElement, {
+       attributes: true,
+       attributeFilter: ['class'],
+    })
+    return () => observer.disconnect()
   }, [])
+
   return (
     <button
       type="button"

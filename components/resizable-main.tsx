@@ -486,11 +486,11 @@ export function ResizableMain() {
    }, [])
 
    return (
-      <div className='lg:flex gap-4 space-y-0 h-full text-foreground'>
+      <div className='lg:flex gap-4 pb-4 space-y-0 h-full text-foreground'>
          <Dock
             items={tabs}
             className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white dark:bg-neutral-900 bg-neutral-50 transition-all duration-300 ${
-               isMobile && isAtBottom && selectedItem.id !== 'eResq-app' && selectedItem.id !== 'casa-app'
+               isMobile && isAtBottom
                   ? 'opacity-0 pointer-events-none translate-y-20'
                   : 'opacity-100 translate-y-0'
             }`}
