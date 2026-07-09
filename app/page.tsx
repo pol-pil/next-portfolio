@@ -1,8 +1,8 @@
-import ImageTrail from './components/image-trail'
-import { ResizableMain } from './components/resizable-main'
-import { ThemeProvider } from './components/theme-provider'
+import ImageTrail from '@/components/image-trail'
+import { ResizableMain } from '@/components/resizable-main'
+import { ThemeProvider } from '@/components/theme-provider'
 // import { Analytics } from '@vercel/analytics/react'
-import { TooltipProvider } from './components/ui/tooltip'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 function Home() {
    return (
