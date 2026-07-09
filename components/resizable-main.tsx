@@ -251,7 +251,7 @@ function ExtraMediaGrid({ item }: { item: WorkItem }) {
    return (
       <>
          <PhotoProvider>
-            <div className='flex flex-row flex-wrap gap-2 pb-20'>
+            <div className='flex flex-row flex-wrap gap-2 pb-24'>
                {item.extra.map((src, index) => {
                   const isVideo = /\.(mp4|webm|mov|ogg)$/i.test(src)
 
@@ -301,7 +301,7 @@ function ExtraMediaGrid({ item }: { item: WorkItem }) {
 function ItemMeta({ item }: { item: WorkItem }) {
    return (
       <div className='flex flex-col gap-6 border-none text-foreground/80'>
-         <div className='flex flex-row p-4 justify-between items-center'>
+         <div className='flex flex-row p-4 pt-8 justify-between items-center'>
             <div className='max-w-[70%]'>
                <p className='text-2xl lg:text-3xl font-semibold'>{item.description}</p>
                <p className='text-sm lg:text-md'>{item.info}</p>
@@ -441,14 +441,15 @@ export function ResizableMain() {
       ...sections.map((section) => ({
          icon: section.id === 'visuals' ? <Wallpaper className='size-5' /> : <SquareTerminal className='size-5' />,
          label: section.label,
-         className: 'rounded-lg border-[1px]',
+         className: 'rounded-lg',
          isActive: activeSection === section.id,
          onClick: () => handleSectionChange(section.id),
       })),
       {
          icon: <ModeToggle />,
          label: 'Theme',
-         className: 'rounded-full border-[1px] border-none shadow-none',
+         className: 'rounded-full shadow-none',
+         isTransparent: true,
          isActive: false,
          onClick: () => {},
       },
@@ -457,11 +458,12 @@ export function ResizableMain() {
               {
                  icon: (
                     <Avatar className='size-12'>
-                       <AvatarImage src='/polpr.avif' alt='John Paul Pilar' />
+                       <AvatarImage src='/polp1.avif' alt='John Paul Pilar' />
                     </Avatar>
                  ),
                  label: 'Contact',
-                 className: 'rounded-full border-[1px] ml-20 border-none shadow-none',
+                 isTransparent: true,
+                 className: 'rounded-full ml-20 border-none shadow-none',
                  isActive: false,
                  onClick: () => {
                     window.open('https://www.linkedin.com/in/johnpaulpilar/', '_blank', 'noopener,noreferrer')
@@ -487,13 +489,11 @@ export function ResizableMain() {
    }, [])
 
    return (
-      <div className='lg:flex gap-4 pb-4 space-y-0 h-full text-foreground'>
+      <div className='lg:flex gap-4 space-y-0 h-full text-foreground'>
          <Dock
             items={tabs}
-            className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white dark:bg-neutral-900 bg-neutral-50 transition-all duration-300 ${
-               isMobile && isAtBottom
-                  ? 'opacity-0 pointer-events-none translate-y-20'
-                  : 'opacity-100 translate-y-0'
+            className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300  border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] ${
+               isMobile && isAtBottom ? 'opacity-0 pointer-events-none translate-y-20' : 'opacity-100 translate-y-0'
             }`}
             panelHeight={70}
             baseItemSize={50}
@@ -504,7 +504,7 @@ export function ResizableMain() {
             <Tabs value={activeSection} onValueChange={handleSectionChange} className='h-full'>
                {sections.map((section) => (
                   <TabsContent key={section.id} value={section.id} className='min-h-0'>
-                     <ScrollArea className='h-full w-full lg:px-4'>
+                     <ScrollArea className='h-full w-full lg:px-4 [&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_0px,black_calc(97%-0px),transparent)]'>
                         <ItemPreview
                            item={selectedItem.section === section.id ? selectedItem : getDefaultItem(section.id)}
                         />
@@ -514,23 +514,32 @@ export function ResizableMain() {
             </Tabs>
          </div>
 
-         <div className='flex flex-col min-w-0 space-y-4 gap-2 lg:gap-0 lg:max-w-64'>
-            <Card className='group border-none lg:rounded-br-[4em] md:rounded-tr-xl sm:rounded-tr-[4em] shadow-lg hidden lg:block transition-all duration-500 hover:shadow-[0_0_25px_rgba(115,93,147,0.35)] dark:hover:shadow-[0_0_15px_rgba(115,93,147,0.35)] hover:-translate-y-0.5'>
+         <div className='flex flex-col pb-4 min-w-0 space-y-4 gap-2 lg:gap-0 lg:max-w-60'>
+            <Card className='min-h-43 overflow-hidden group rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/5 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] rounded-br-[4em] hidden lg:block transition-all duration-500 hover:shadow-[0_0_25px_rgba(115,93,147,0.25)] dark:hover:shadow-[0_0_15px_rgba(115,93,147,0.35)] hover:-translate-y-0.5'>
                <a href='https://www.linkedin.com/in/johnpaulpilar/' target='_blank' rel='noopener noreferrer'>
-                  <div className='flex h-full flex-row gap-3 p-4 text-center items-center'>
-                     <Avatar className='size-12 transition-transform duration-500 group-hover:scale-105'>
-                        <AvatarImage src='/polpr.avif' alt='John Paul Pilar' />
+                  <div className='absolute inset-0 bg-gradient-to-br from-[#735D93]/15 dark:from-[#735D93]/20 via-transparent to-transparent bg-[length:200%_200%] animate-[gradientShift_8s_ease_infinite] pointer-events-none' />
+                  <div className='absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[300ms] ease-in-out bg-gradient-to-r from-transparent via-black/5 dark:via-white/5 to-transparent pointer-events-none' />
+
+                  <img
+                     src='/icon.svg'
+                     alt='Logo'
+                     className='absolute top-14 left-1 scale-150 opacity-[0.30] dark:opacity-[0.01] transition-all duration-700 ease-out group-hover:opacity-[0.02] animate-[float_6s_ease-in-out_infinite]'
+                  />
+
+                  <div className='flex flex-row gap-4 px-4 -mt-2 items-center'>
+                     <Avatar className='size-12  transition-transform duration-500 group-hover:scale-105'>
+                        <AvatarImage className='rounded-lg' src='/polp1.avif' alt='John Paul Pilar' />
                      </Avatar>
                      <div className='flex flex-col items-start truncate'>
-                        <span className='font-semibold'>John Paul Pilar</span>
-                        <span className='text-xs'>Designer/Developer</span>
+                        <span className='font-semibold z-1'>John Paul Pilar</span>
+                        <span className='text-xs z-1 text-muted-foreground'>Designer/Developer</span>
                      </div>
                   </div>
                </a>
             </Card>
 
-            <Card className='min-h-0 border-none py-0 overflow-hidden sm:rounded-br-[4em] md:rounded-br-xl lg:rounded-tr-[4em] shadow-lg w-full mb-4 lg:mb-0'>
-               <ScrollArea className='h-full w-full'>
+            <Card className='min-h-0 border-none py-0 overflow-hidden sm:rounded-br-[4em] md:rounded-br-xl lg:rounded-tr-[4em] shadow-lg w-full mb-4 lg:mb-0 border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/5 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] '>
+               <ScrollArea className='h-full w-full [&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_10px,black_calc(100%-10px),transparent)]'>
                   <div className='px-4 w-full'>
                      {Object.entries(sidebarCategories).map(([category, items], _index) => (
                         <div key={category} className='space-y-2 py-4 w-full'>

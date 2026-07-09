@@ -17,6 +17,7 @@ export type DockItemData = {
   onClick: () => void;
   className?: string;
   isActive?: boolean;
+  isTransparent?: boolean;
 };
 
 export type DockProps = {
@@ -41,6 +42,7 @@ type DockItemProps = {
   magnification: number;
   label?: React.ReactNode;
   isActive?: boolean;
+  isTransparent?: boolean;
 };
 
 function DockItem({
@@ -53,7 +55,8 @@ function DockItem({
   magnification,
   baseItemSize,
   label,
-  isActive
+  isActive,
+  isTransparent
 }: DockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isHovered = useMotionValue(0);
@@ -89,9 +92,12 @@ function DockItem({
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
       onKeyDown={handleKeyDown}
-      className={`relative inline-flex items-center justify-center rounded-full bg-[#120F17] border-neutral-700 border-2 shadow-md         ${isActive
-          ? 'dark:bg-neutral-200 dark:text-neutral-900 bg-neutral-800 text-netral-200'
-          : 'bg-white text-neutral-900 border-white dark:bg-neutral-900 dark:border-neutral-700 dark:text-white'
+      className={`relative inline-flex items-center justify-center rounded-full bg-[#120F17] shadow-md         ${
+        isTransparent
+        ? 'bg-transparent shadow-none border-none'
+        : isActive
+        ? 'dark:bg-neutral-200 dark:text-neutral-900 text-neutral-200'
+        : 'bg-white text-neutral-900 dark:bg-neutral-900/90 dark:text-white'
         } ${className}`}
       tabIndex={0}
       role="button"
@@ -183,6 +189,7 @@ export default function Dock({
       {items.map((item, index) => (
         <DockItem
           key={index}
+          isTransparent={item.isTransparent}
           isActive={item.isActive}
           onClick={item.onClick}
           className={item.className}

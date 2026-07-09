@@ -51,7 +51,7 @@
 :root {
   --background: oklch(1.0000 0 0);
   --foreground: oklch(0.1452 0.0021 286.1313);
-  --card: oklch(0.9680 0.0040 286.3252);
+  --card: oklch(0.9707 0.0027 286.3504);
   --card-foreground: oklch(0.1452 0.0021 286.1313);
   --popover: oklch(1.0000 0 0);
   --popover-foreground: oklch(0.1452 0.0021 286.1313);
@@ -81,9 +81,9 @@
   --sidebar-accent-foreground: oklch(0.2981 0.0525 306.4374);
   --sidebar-border: oklch(0.9225 0.0027 286.3471);
   --sidebar-ring: oklch(0.6994 0.0888 283.8666);
-  --font-sans: 'Geist', serif;
+  --font-sans: 'Geist', sans-serif;
   --font-serif: 'Geist', serif;
-  --font-mono: 'Geist Mono', monospace;
+  --font-mono: 'Geist', monospace;
   --radius: 0.75rem;
   --shadow-x: 2px;
   --shadow-y: 2px;
@@ -104,9 +104,9 @@
 }
 
 .dark {
-  --background: oklch(0.1149 0 0);
-  --foreground: oklch(0.9400 0 0);
-  --card: oklch(0.1563 0.0084 285.3812);
+  --background: oklch(0 0 0);
+  --foreground: oklch(1.0000 0 0);
+  --card: oklch(0.1457 0.0043 285.8570);
   --card-foreground: oklch(0.9626 0.0066 286.2742);
   --popover: oklch(0 0 0);
   --popover-foreground: oklch(0.9626 0.0066 286.2742);
@@ -136,7 +136,7 @@
   --sidebar-accent-foreground: oklch(0.7853 0.1041 274.7134);
   --sidebar-border: oklch(0.2286 0.0096 285.6168);
   --sidebar-ring: oklch(0.6994 0.0888 283.8666);
-  --font-sans: 'Geist', serif;
+  --font-sans: 'Geist', sans-serif;
   --font-serif: 'Geist', serif;
   --font-mono: 'Geist Mono', monospace;
   --radius: 0.75rem;
