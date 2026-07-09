@@ -14,10 +14,11 @@ import { TextRoll } from './ui/skiper-ui/skiper58'
 import Dock from './Dock'
 import { Spinner } from './ui/spinner'
 import { ModeToggle } from './mode-toggle'
-import { type WorkItem, type SectionId, workItems, sections, getDefaultItem, getItemsByCategory } from './work-items'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import 'react-photo-view/dist/react-photo-view.css'
+import { SectionId, WorkItem } from '@/lib/definitions'
+import { getDefaultItem, getItemsByCategory, sections, workItems } from '@/lib/data'
 
 // const LogoIcon = () => (
 //    <svg width='15' height='15' viewBox='0 0 801 801' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
@@ -169,7 +170,7 @@ function ItemPreview({ item }: { item: WorkItem }) {
    )
 
    return (
-      <div className='flex h-full flex-col gap-4'>
+      <div className='h-full gap-4'>
          {item.embedUrl ? (
             isPortrait ? (
                <div className='flex justify-center'>

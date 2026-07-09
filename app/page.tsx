@@ -8,7 +8,7 @@ function Home() {
    return (
       <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
          {/* <Analytics /> */}
-         <div className='h-dvh w-full pt-4 px-2 sm:px-8 lg:px-36'>
+         <div className='h-dvh w-full pt-4 px-2 sm:px-8 xl:px-36'>
             {/* ImageTrail behind everything */}
             <div className='fixed inset-0 z-0'>
                <ImageTrail
