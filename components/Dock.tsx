@@ -192,7 +192,7 @@ export default function Dock({
           isTransparent={item.isTransparent}
           isActive={item.isActive}
           onClick={item.onClick}
-          className={item.className}
+          className={`${item.className} cursor-pointer`}
           mouseX={mouseX}
           spring={spring}
           distance={distance}

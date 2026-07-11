@@ -18,7 +18,7 @@ export function ModeToggle() {
 
    return (
       <div onClick={toggleTheme}>
-         <ThemeToggleButton2 className='size-8 bg-transparent rounded-lg p-2' />
+         <ThemeToggleButton2 className='size-8 bg-transparent rounded-lg p-2 cursor-pointer' />
       </div>
    )
 }

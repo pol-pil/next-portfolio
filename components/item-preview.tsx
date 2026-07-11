@@ -1,10 +1,11 @@
 import { WorkItem } from "@/lib/definitions"
 import { useEffect, useRef, useState } from "react"
-import { VideoPopOver } from "./video-popover"
+import { createPortal } from "react-dom"
 import { Spinner } from "./ui/spinner"
 import { Maximize, Minimize } from "lucide-react"
 import { PhotoProvider, PhotoView } from "react-photo-view"
 import ItemMeta from "./item-meta"
+import 'react-photo-view/dist/react-photo-view.css'
 
 export default function ItemPreview({ item }: { item: WorkItem }) {
     const isPortrait = item.aspectRatio < 1
@@ -13,6 +14,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
     const [isFullscreen, setIsFullscreen] = useState(false)
     const iframeRef = useRef<HTMLIFrameElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
+    const bgVideoRef = useRef<HTMLVideoElement>(null)
  
     useEffect(() => {
        const handler = () => setIsFullscreen(!!document.fullscreenElement)
@@ -39,6 +41,18 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
           clearTimeout(fallback)
        }
     }, [item.embedUrl])
+
+    // Pause/resume the background thumbnail video when modal opens/closes
+    useEffect(() => {
+       const bg = bgVideoRef.current
+       if (!bg) return
+
+       if (popOpen) {
+          bg.pause()
+       } else {
+          bg.play().catch(() => {})
+       }
+    }, [popOpen])
  
     function toggleFullscreen() {
        const el = containerRef.current
@@ -64,6 +78,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                       }}
                    >
                       <video
+                         ref={bgVideoRef}
                          autoPlay
                          muted
                          playsInline
@@ -80,6 +95,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                    onClick={() => setPopOpen(true)}
                 >
                    <video
+                      ref={bgVideoRef}
                       autoPlay
                       muted
                       playsInline
@@ -89,12 +105,27 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                    />
                 </div>
              )}
-             <VideoPopOver
-                src={item.video}
-                open={popOpen}
-                onClose={() => setPopOpen(false)}
-                aspectRatio={item.aspectRatio}
-             />
+
+             {popOpen &&
+                typeof document !== 'undefined' &&
+                createPortal(
+                   <div
+                      className='fixed inset-0 z-50 flex items-center justify-center bg-black/90 animate-in fade-in duration-200'
+                      onClick={() => setPopOpen(false)}
+                   >
+                      <video
+                         key={item.video}
+                         src={item.video}
+                         controls
+                         autoPlay
+                         playsInline
+                         className='max-w-[90vw] max-h-[90vh] rounded-md'
+                         onClick={(e) => e.stopPropagation()}
+                      />
+                   </div>,
+                   document.body
+                )}
+
              <ItemMeta item={item} />
           </div>
        )
@@ -220,4 +251,3 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
        </div>
     )
  }
- 
