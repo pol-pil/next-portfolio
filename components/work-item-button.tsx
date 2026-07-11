@@ -20,7 +20,7 @@ export default function WorkItemButton({
           type='button'
           variant='ghost'
           className={cn(
-             'group relative w-full h-14 overflow-hidden rounded-lg p-0 border-0',
+             'group relative w-full h-14 overflow-hidden rounded-lg p-0 border-0 cursor-pointer',
              isSelected && 'shadow-2xl'
           )}
           aria-pressed={isSelected}
