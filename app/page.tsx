@@ -1,31 +1,43 @@
-import ImageTrail from '@/components/image-trail'
-import { ResizableMain } from '@/components/resizable-main'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Analytics } from '@vercel/analytics/react'
-import { TooltipProvider } from '@/components/ui/tooltip'
+'use client'
 
-function Home() {
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+export default function Home() {
+   const router = useRouter()
+   const [isLeaving, setIsLeaving] = useState(false)
+
+   useEffect(() => {
+      const leaveTimer = setTimeout(() => setIsLeaving(true), 900)
+      const redirectTimer = setTimeout(() => router.replace('/works'), 1200)
+
+      return () => {
+         clearTimeout(leaveTimer)
+         clearTimeout(redirectTimer)
+      }
+   }, [router])
+
    return (
-      <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-         <Analytics />
-         <div className='h-dvh w-full pt-4 px-2 sm:px-8 xl:px-36'>
-            {/* ImageTrail behind everything */}
-            <div className='fixed inset-0 z-0'>
-               <ImageTrail
-                  key='image-trail'
-                  items={['/cleanrot7.avif', '/vp1.avif', '/juliana.avif', '/jane9.avif', '/resto.avif']}
-                  variant={1}
+      <AnimatePresence>
+         {!isLeaving && (
+            <motion.div
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               exit={{ opacity: 0 }}
+               transition={{ duration: 0.3 }}
+               className='fixed inset-0 flex flex-col items-center justify-center gap-4 bg-background text-foreground'
+            >
+               <motion.img
+                  src='/icon.svg'
+                  alt='Logo'
+                  className='size-10 brightness-0 dark:invert'
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
                />
-            </div>
-
-            {/* ResizableMain on top */}
-            <div className='relative z-10 h-full'>
-               <TooltipProvider>
-                  <ResizableMain />
-               </TooltipProvider>
-            </div>
-         </div>
-      </ThemeProvider>
+               <p className='text-sm text-muted-foreground'>Homepage coming soon…</p>
+            </motion.div>
+         )}
+      </AnimatePresence>
    )
 }
-export default Home

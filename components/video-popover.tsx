@@ -10,6 +10,7 @@ import {
   VideoPlayerTimeRange,
   VideoPlayerMuteButton,
 } from './ui/skiper-ui/skiper67'
+import { createPortal } from 'react-dom'
 
 interface VideoPopOverProps {
   src: string
@@ -52,8 +53,8 @@ export function VideoPopOver({
       aspectRatio: ratio,
     }
 
-  return (
-    <AnimatePresence>
+    const content = (
+      <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-[101] flex items-center justify-center">
 
@@ -113,5 +114,8 @@ export function VideoPopOver({
         </div>
       )}
     </AnimatePresence>
-  )
+    )
+
+    if (typeof document === 'undefined') return null
+    return createPortal(content, document.body)
 }
