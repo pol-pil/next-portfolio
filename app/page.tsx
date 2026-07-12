@@ -5,11 +5,13 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { BriefcaseBusiness, Eye, HomeIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Home() {
    const router = useRouter()
    const [isMobile, setIsMobile] = useState(false)
+   const [isActive, setIsActive] = useState(false)
+   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
    useEffect(() => {
       const checkSize = () => setIsMobile(window.innerWidth < 1024)
@@ -63,6 +65,17 @@ export default function Home() {
          : []),
    ]
 
+   const handleClick = () => {
+      setIsActive(true)
+
+      // clear any existing timer so rapid clicks don't stack
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+
+      timeoutRef.current = setTimeout(() => {
+         setIsActive(false)
+      }, 1000)
+   }
+
    return (
       <div className=''>
          <Dock
@@ -91,9 +104,22 @@ export default function Home() {
              w-[clamp(20rem,30vw,35.75rem)] h-auto
              brightness-0 dark:invert pointer-events-none z-0'
             />
-            <p className='relative z-10 text-[clamp(1.75rem,6vw,3.75rem)] font-semibold text-nowrap text-center px-4'>
-               Designer / Developer
-            </p>
+            <div className='flex flex-row items-center lg:gap-2'>
+               <p className='relative z-10 text-[clamp(1.75rem,6vw,3.75rem)] font-semibold text-nowrap text-center px-4'>
+                  Designer
+               </p>
+               <img
+                  src='/polp1.avif'
+                  alt=''
+                  onClick={handleClick}
+                  className={`rounded-full transition-all hover:size-18 duration-300 cursor-pointer ${
+                     isActive ? 'size-18' : 'size-4'
+                  }`}
+               />
+               <p className='relative z-10 text-[clamp(1.75rem,6vw,3.75rem)] font-semibold text-nowrap text-center px-4'>
+                  Developer
+               </p>
+            </div>
          </div>
          asdasd
       </div>
