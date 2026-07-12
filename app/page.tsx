@@ -72,29 +72,29 @@ export default function Home() {
             baseItemSize={isMobile ? 42 : 50}
             magnification={isMobile ? 44 : 58}
          />
-<div className="relative flex flex-1 h-dvh justify-center items-center overflow-hidden">
-  <img
-    src="/iconstar.svg"
-    alt=""
-    aria-hidden="true"
-    className="absolute top-[8%] left-0 -translate-x-1/2
+         <div className='relative flex flex-1 h-dvh justify-center items-center overflow-hidden'>
+            <img
+               src='/iconstar.svg'
+               alt=''
+               aria-hidden='true'
+               className='absolute top-[8%] left-0 -translate-x-1/2
                lg:top-1/2 lg:-translate-y-1/2 lg:left-0 lg:-translate-x-1/2
                w-[clamp(20rem,30vw,35.75rem)] h-auto
-               brightness-0 dark:invert pointer-events-none z-0"
-  />
-<img
-  src="/iconcode.svg"
-  alt=""
-  aria-hidden="true"
-  className="absolute bottom-[8%] right-0 translate-x-[52%]
+               brightness-0 dark:invert pointer-events-none z-0'
+            />
+            <img
+               src='/iconcode.svg'
+               alt=''
+               aria-hidden='true'
+               className='absolute bottom-[8%] right-0 translate-x-[52%]
              lg:top-1/2 lg:-translate-y-1/2 lg:right-0
              w-[clamp(20rem,30vw,35.75rem)] h-auto
-             brightness-0 dark:invert pointer-events-none z-0"
-/>
-  <p className="relative z-10 text-[clamp(1.75rem,6vw,3.75rem)] font-semibold text-nowrap text-center px-4">
-    Designer / Developer
-  </p>
-</div>
+             brightness-0 dark:invert pointer-events-none z-0'
+            />
+            <p className='relative z-10 text-[clamp(1.75rem,6vw,3.75rem)] font-semibold text-nowrap text-center px-4'>
+               Designer / Developer
+            </p>
+         </div>
          asdasd
       </div>
    )
