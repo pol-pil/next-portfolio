@@ -11,7 +11,7 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 import WorkItemButton from '@/components/work-item-button'
 import { getDefaultItem, getItemsByCategory, sections, workItems } from '@/lib/data'
 import { SectionId, WorkItem } from '@/lib/definitions'
-import { SquareTerminal, Wallpaper } from 'lucide-react'
+import { Astroid, Code, SquareTerminal, Wallpaper } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -65,7 +65,7 @@ export default function Page() {
          isTransparent: true,
       },
       ...sections.map((section) => ({
-         icon: section.id === 'visuals' ? <Wallpaper className='size-5' /> : <SquareTerminal className='size-5' />,
+         icon: section.id === 'visuals' ? <Astroid className='size-5' /> : <Code className='size-5' />,
          label: section.label,
          className: 'rounded-lg',
          isActive: activeSection === section.id,
