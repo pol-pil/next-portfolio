@@ -61,7 +61,7 @@ export default function Home() {
          isActive: false,
          onClick: () => {},
       },
-      ...(isMobile && !isActive && !isImageVisible
+      ...(!isActive && !isImageVisible
          ? [
               {
                  icon: (
@@ -126,7 +126,7 @@ export default function Home() {
                   src='/polp1.avif'
                   alt=''
                   onClick={handleClick}
-                  className={`rounded-full transition-all hover:size-18 duration-300 cursor-pointer ${
+                  className={`rounded-full border-1 border-black transition-all hover:size-18 duration-300 cursor-pointer ${
                      isActive ? 'size-18' : 'size-4'
                   }`}
                />
