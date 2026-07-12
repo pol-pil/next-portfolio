@@ -3,7 +3,7 @@
 import Dock from '@/components/Dock'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { BriefcaseBusiness, Eye, HomeIcon } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
@@ -11,15 +11,31 @@ export default function Home() {
    const router = useRouter()
    const [isMobile, setIsMobile] = useState(false)
    const [isActive, setIsActive] = useState(false)
+   const [isImageVisible, setIsImageVisible] = useState(true)
    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+   const imageRef = useRef<HTMLImageElement>(null)
 
    useEffect(() => {
       const checkSize = () => setIsMobile(window.innerWidth < 1024)
-
       checkSize()
       window.addEventListener('resize', checkSize)
-
       return () => window.removeEventListener('resize', checkSize)
+   }, [])
+
+   // Track whether the polp1 image is currently in the viewport
+   useEffect(() => {
+      const node = imageRef.current
+      if (!node) return
+
+      const observer = new IntersectionObserver(
+         ([entry]) => {
+            setIsImageVisible(entry.isIntersecting)
+         },
+         { threshold: 0 } // fires as soon as even 1px is visible/hidden
+      )
+
+      observer.observe(node)
+      return () => observer.disconnect()
    }, [])
 
    const tabs = [
@@ -40,12 +56,12 @@ export default function Home() {
       {
          icon: <ModeToggle />,
          label: 'Theme',
-         className: 'rounded-full shadow-none pb-2',
+         className: 'rounded-full shadow-none',
          isTransparent: true,
          isActive: false,
          onClick: () => {},
       },
-      ...(isMobile
+      ...(isMobile && !isActive && !isImageVisible
          ? [
               {
                  icon: (
@@ -55,7 +71,7 @@ export default function Home() {
                  ),
                  label: 'Contact',
                  isTransparent: true,
-                 className: 'rounded-full ml-20 border-none shadow-none',
+                 className: 'rounded-full ml-14 border-none shadow-none',
                  isActive: false,
                  onClick: () => {
                     window.open('https://www.linkedin.com/in/johnpaulpilar/', '_blank', 'noopener,noreferrer')
@@ -67,10 +83,7 @@ export default function Home() {
 
    const handleClick = () => {
       setIsActive(true)
-
-      // clear any existing timer so rapid clicks don't stack
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
-
       timeoutRef.current = setTimeout(() => {
          setIsActive(false)
       }, 1000)
@@ -80,7 +93,7 @@ export default function Home() {
       <div className=''>
          <Dock
             items={tabs}
-            className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300  border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`}
+            className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`}
             panelHeight={isMobile ? 60 : 68}
             baseItemSize={isMobile ? 42 : 50}
             magnification={isMobile ? 44 : 58}
@@ -109,6 +122,7 @@ export default function Home() {
                   Designer
                </p>
                <img
+                  ref={imageRef}
                   src='/polp1.avif'
                   alt=''
                   onClick={handleClick}
@@ -121,7 +135,9 @@ export default function Home() {
                </p>
             </div>
          </div>
-         asdasd
+         <div className='flex h-300 items-center justify-center text-4xl'>
+                  Hello freind. Hello friend
+         </div>
       </div>
    )
 }
