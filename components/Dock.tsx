@@ -198,7 +198,7 @@ export default function Dock({
                   exit={{ opacity: 0, scale: 0.4, width: 0, marginLeft: 0, marginRight: 0 }}
                   transition={{ duration: 0.3, ease: 'easeOut' }}
                   className='flex items-end'
-                  style={{ clipPath: 'inset(-100px 0px -100px 0px)' }}
+                  style={{ clipPath: 'inset(-100px -12px -100px -12px)' }}
                >
                   <DockItem
                      isTransparent={item.isTransparent}
