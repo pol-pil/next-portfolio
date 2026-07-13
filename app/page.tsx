@@ -12,6 +12,7 @@ export default function Home() {
    const [isMobile, setIsMobile] = useState(false)
    const [isActive, setIsActive] = useState(false)
    const [isImageVisible, setIsImageVisible] = useState(true)
+   const [scrollProgress, setScrollProgress] = useState(0) // 0 = top, 1 = fully scrolled past hero
    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
    const imageRef = useRef<HTMLImageElement>(null)
 
@@ -20,6 +21,29 @@ export default function Home() {
       checkSize()
       window.addEventListener('resize', checkSize)
       return () => window.removeEventListener('resize', checkSize)
+   }, [])
+
+   // Track scroll progress through the hero viewport (0 -> 1)
+   useEffect(() => {
+      let rafId: number | null = null
+
+      const updateProgress = () => {
+         rafId = null
+         const heroHeight = window.innerHeight || 1
+         const progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1)
+         setScrollProgress(progress)
+      }
+
+      const onScroll = () => {
+         if (rafId === null) rafId = requestAnimationFrame(updateProgress)
+      }
+
+      updateProgress()
+      window.addEventListener('scroll', onScroll, { passive: true })
+      return () => {
+         window.removeEventListener('scroll', onScroll)
+         if (rafId !== null) cancelAnimationFrame(rafId)
+      }
    }, [])
 
    // Track whether the polp1 image is currently in the viewport
@@ -89,6 +113,25 @@ export default function Home() {
       }, 1000)
    }
 
+   // Phase 1 (0 -> 0.5 of scroll): Designer/Developer row moves up + fades out
+   // Phase 2 (0.5 -> 1 of scroll): icons converge to center + shrink
+   const textPhase = Math.min(Math.max(scrollProgress / 0.4, 0), 1)
+   const iconPhase = Math.min(Math.max((scrollProgress) / 0.7, 0), 10)
+
+   const textTranslateY = textPhase * -0 // px, moves up
+   const textOpacity = 1 - textPhase
+
+   const travel = iconPhase * 45 // vw, how far icons travel toward center
+   const scale = 1 - iconPhase * 0.8 // shrinks down to 40% size
+
+   const iconstarTransform = isMobile
+      ? `translateX(calc(-50% + ${travel}vw)) scale(${scale})`
+      : `translate(calc(-50% + ${travel}vw), -50%) scale(${scale})`
+
+   const iconcodeTransform = isMobile
+      ? `translateX(calc(52% - ${travel}vw)) scale(${scale})`
+      : `translate(calc(0% - ${travel}vw), -50%) scale(${scale})`
+
    return (
       <div className=''>
          <Dock
@@ -103,21 +146,30 @@ export default function Home() {
                src='/iconstar.svg'
                alt=''
                aria-hidden='true'
-               className='absolute top-[8%] left-0 -translate-x-1/2
-               lg:top-1/2 lg:-translate-y-1/2 lg:left-0 lg:-translate-x-1/2
+               style={{ transform: iconstarTransform, willChange: 'transform', opacity: textOpacity }}
+               className='absolute top-[8%] left-0
+               lg:top-1/2 lg:left-0
                w-[clamp(20rem,30vw,35.75rem)] h-auto
-               brightness-0 dark:invert pointer-events-none z-0'
+               brightness-0 dark:invert pointer-events-none z-0 transition-transform duration-100 ease-out'
             />
             <img
                src='/iconcode.svg'
                alt=''
                aria-hidden='true'
-               className='absolute bottom-[8%] right-0 translate-x-[52%]
-             lg:top-1/2 lg:-translate-y-1/2 lg:right-0
+               style={{ transform: iconcodeTransform, willChange: 'transform', opacity: textOpacity }}
+               className='absolute bottom-[8%] right-0
+             lg:top-1/2 lg:-right-[16%]
              w-[clamp(20rem,30vw,35.75rem)] h-auto
-             brightness-0 dark:invert pointer-events-none z-0'
+             brightness-0 dark:invert pointer-events-none z-0 transition-transform duration-100 ease-out'
             />
-            <div className='flex flex-row items-center lg:gap-2'>
+            <div
+               className='flex flex-row items-center lg:gap-2'
+               style={{
+                  transform: `translateY(${textTranslateY}px)`,
+                  opacity: textOpacity,
+                  willChange: 'transform, opacity',
+               }}
+            >
                <p className='relative z-10 text-[clamp(1.75rem,6vw,3.75rem)] font-semibold text-nowrap text-center px-4'>
                   Designer
                </p>
@@ -136,7 +188,7 @@ export default function Home() {
             </div>
          </div>
          <div className='flex h-300 items-center justify-center text-4xl'>
-                  Hello freind. Hello friend
+            Hello freind. Hello friend
          </div>
       </div>
    )
