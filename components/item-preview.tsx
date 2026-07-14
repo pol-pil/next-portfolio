@@ -6,6 +6,7 @@ import { Maximize, Minimize } from "lucide-react"
 import { PhotoProvider, PhotoView } from "react-photo-view"
 import ItemMeta from "./item-meta"
 import 'react-photo-view/dist/react-photo-view.css'
+import { Button } from "./ui/button"
 
 export default function ItemPreview({ item }: { item: WorkItem }) {
     const isPortrait = item.aspectRatio < 1
@@ -164,7 +165,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
     )
  
     const fullscreenButton = isLoaded && (
-       <button
+       <Button
           onClick={toggleFullscreen}
           style={{
              position: 'absolute',
@@ -172,10 +173,10 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
              right: 8,
              zIndex: 10,
           }}
-          className='rounded-md bg-black/50 p-1.5 text-white hover:bg-black/70 backdrop-blur-sm'
+          className='rounded-md cursor-pointer bg-black/50 p-1.5 text-white hover:bg-black/70 backdrop-blur-sm'
        >
           {isFullscreen ? <Minimize className='size-4' /> : <Maximize className='size-4' />}
-       </button>
+       </Button>
     )
  
     return (
@@ -227,7 +228,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                 <PhotoProvider>
                    <PhotoView src={item.image}>
                       <img
-                         className='rounded-lg object-contain'
+                         className='rounded-lg object-contain cursor-pointer'
                          style={{
                             height: 'min(80vh, 90vw / ' + item.aspectRatio + ')',
                             width: `min(90vw, min(80vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,

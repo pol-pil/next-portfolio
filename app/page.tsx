@@ -12,7 +12,7 @@ export default function Home() {
    const [isMobile, setIsMobile] = useState(false)
    const [isActive, setIsActive] = useState(false)
    const [isImageVisible, setIsImageVisible] = useState(true)
-   const [scrollProgress, setScrollProgress] = useState(0) // 0 = top, 1 = fully scrolled past hero
+   const [scrollProgress, setScrollProgress] = useState(0)
    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
    const imageRef = useRef<HTMLImageElement>(null)
 
@@ -23,21 +23,17 @@ export default function Home() {
       return () => window.removeEventListener('resize', checkSize)
    }, [])
 
-   // Track scroll progress through the hero viewport (0 -> 1)
    useEffect(() => {
       let rafId: number | null = null
-
       const updateProgress = () => {
          rafId = null
          const heroHeight = window.innerHeight || 1
          const progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1)
          setScrollProgress(progress)
       }
-
       const onScroll = () => {
          if (rafId === null) rafId = requestAnimationFrame(updateProgress)
       }
-
       updateProgress()
       window.addEventListener('scroll', onScroll, { passive: true })
       return () => {
@@ -46,18 +42,10 @@ export default function Home() {
       }
    }, [])
 
-   // Track whether the polp1 image is currently in the viewport
    useEffect(() => {
       const node = imageRef.current
       if (!node) return
-
-      const observer = new IntersectionObserver(
-         ([entry]) => {
-            setIsImageVisible(entry.isIntersecting)
-         },
-         { threshold: 0 } // fires as soon as even 1px is visible/hidden
-      )
-
+      const observer = new IntersectionObserver(([entry]) => setIsImageVisible(entry.isIntersecting), { threshold: 0 })
       observer.observe(node)
       return () => observer.disconnect()
    }, [])
@@ -108,21 +96,15 @@ export default function Home() {
    const handleClick = () => {
       setIsActive(true)
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(() => {
-         setIsActive(false)
-      }, 1000)
+      timeoutRef.current = setTimeout(() => setIsActive(false), 1000)
    }
 
-   // Phase 1 (0 -> 0.5 of scroll): Designer/Developer row moves up + fades out
-   // Phase 2 (0.5 -> 1 of scroll): icons converge to center + shrink
    const textPhase = Math.min(Math.max(scrollProgress / 0.4, 0), 1)
-   const iconPhase = Math.min(Math.max((scrollProgress) / 0.7, 0), 10)
-
-   const textTranslateY = textPhase * -0 // px, moves up
+   const iconPhase = Math.min(Math.max(scrollProgress / 0.7, 0), 10)
+   const textTranslateY = textPhase * -0
    const textOpacity = 1 - textPhase
-
-   const travel = iconPhase * 45 // vw, how far icons travel toward center
-   const scale = 1 - iconPhase * 0.8 // shrinks down to 40% size
+   const travel = iconPhase * 45
+   const scale = 1 - iconPhase * 0.8
 
    const iconstarTransform = isMobile
       ? `translateX(calc(-50% + ${travel}vw)) scale(${scale})`
@@ -133,7 +115,26 @@ export default function Home() {
       : `translate(calc(0% - ${travel}vw), -50%) scale(${scale})`
 
    return (
-      <div className=''>
+      <div className='relative'>
+         {/* Animated gradient backdrop — dark mode only */}
+         <div
+            aria-hidden='true'
+            className='fixed inset-0 -z-20 opacity-0 dark:opacity-100 transition-opacity duration-700'
+            style={{
+               background: 'linear-gradient(120deg, #000000 0%, #0e0d12 50%, #000000 100%)',
+               backgroundSize: '200% 200%',
+               animation: 'gradientDrift 16s ease infinite',
+            }}
+         />
+
+         <style>{`
+         @keyframes gradientDrift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+         }
+         `}</style>
+
          <Dock
             items={tabs}
             className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`}
@@ -187,9 +188,7 @@ export default function Home() {
                </p>
             </div>
          </div>
-         <div className='flex h-300 items-center justify-center text-4xl'>
-            Hello freind. Hello friend
-         </div>
+         <div className='flex h-300 items-center justify-center text-4xl'>Hello freind. Hello friend</div>
       </div>
    )
 }
