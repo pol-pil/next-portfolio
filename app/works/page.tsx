@@ -32,6 +32,11 @@ export default function Page() {
       setSelectedItemId(getDefaultItem(nextSection).id)
    }
 
+   function scrollToTop(containerRef: React.RefObject<HTMLDivElement | null>) {
+      const viewport = containerRef.current?.querySelector<HTMLDivElement>('[data-slot="scroll-area-viewport"]')
+      viewport?.scrollTo({ top: 0, behavior: 'smooth' })
+   }
+
    function handleItemSelect(item: WorkItem) {
       setActiveSection(item.section)
       setSelectedItemId(item.id)
@@ -40,7 +45,7 @@ export default function Page() {
       if (isMobile) {
          window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
-         scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+         scrollToTop(scrollRef)
       }
    }
 
@@ -126,11 +131,14 @@ export default function Page() {
             magnification={isMobile ? 44 : 58}
          />
 
-         <div className='min-w-0 flex-1 lg:h-full border-none p-0 pb-20 lg:pb-0'>
+         <div className='min-w-0 flex-1 lg:h-full border-none p-0 pb-8 lg:pb-0'>
             <Tabs value={activeSection} onValueChange={handleSectionChange} className='h-full'>
                {sections.map((section) => (
                   <TabsContent key={section.id} value={section.id} className='min-h-0'>
-                     <ScrollArea className='h-full w-full lg:px-4 [&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_0px,black_calc(97%-0px),transparent)]'>
+                     <ScrollArea
+                        ref={scrollRef}
+                        className='h-full w-full lg:px-4 [&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_0px,black_calc(97%-0px),transparent)]'
+                     >
                         <ItemPreview
                            item={selectedItem.section === section.id ? selectedItem : getDefaultItem(section.id)}
                         />
@@ -146,10 +154,10 @@ export default function Page() {
             <Card className='min-h-0 border-none py-0 overflow-hidden sm:rounded-br-[4em] md:rounded-br-xl lg:rounded-tr-[4em] shadow-lg w-full mb-4 lg:mb-0 border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/5 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] '>
                <ScrollArea className='h-full w-full [&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_10px,black_calc(100%-10px),transparent)]'>
                   <div className='px-4 w-full'>
-                     {Object.entries(sidebarCategories).map(([category, items], _index) => (
+                     {Object.entries(sidebarCategories).map(([category, items]) => (
                         <div key={category} className='space-y-2 py-4 w-full'>
                            <p className='text-sm font-medium text-muted-foreground'>{category}</p>
-                           <div className='space-y-2 w-full'>
+                           <div className='grid grid-cols-2 lg:grid-cols-1 gap-3 w-full'>
                               {items.map((item) => (
                                  <WorkItemButton
                                     key={item.id}

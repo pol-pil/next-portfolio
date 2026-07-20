@@ -28,7 +28,7 @@ export default function WorkItemButton({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
        >
-          <img className='absolute inset-0 h-full w-full object-cover' src={item.image} alt={item.alt} />
+          <img className={cn('absolute grayscale inset-0 h-full w-full object-cover', isSelected && 'grayscale-0', isHovered && 'grayscale-0')} src={item.image} alt={item.alt} />
  
           {/* Overlay: invisible by default, darkens on hover */}
           <div
@@ -43,7 +43,7 @@ export default function WorkItemButton({
           <div
              className={cn(
                 'relative z-10 flex h-full w-full items-center justify-center px-2 transition-opacity duration-500 dark:text-white text-black',
-                isHovered ? 'opacity-100' : 'opacity-0',
+                isHovered ? 'opacity-100' : 'opacity-40 lg:opacity-0',
                 isSelected && 'opacity-100'
              )}
           >
@@ -55,7 +55,7 @@ export default function WorkItemButton({
              ) : (
                 <TextRoll
                    animate={isHovered ? 'hovered' : 'initial'}
-                   className={cn('font-semibold lg:font-bold text-xl uppercase', isSelected && 'text-white')}
+                   className={cn('font-medium text-xl uppercase', isSelected && 'text-white')}
                 >
                    {item.title}
                 </TextRoll>
