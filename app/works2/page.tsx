@@ -9,7 +9,7 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { getDefaultItem, getItemsByCategory, sections, workItems } from '@/lib/data'
 import { SectionId, WorkItem } from '@/lib/definitions'
 import { cn } from '@/lib/utils'
-import { Astroid, ChevronDown, ChevronUp, Code } from 'lucide-react'
+import { Astroid, ChevronDown, ChevronUp, Code, Menu, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -42,7 +42,7 @@ function CategoryBadgeGroup({ items, selectedItemId, onSelectItem }: CategoryBad
                   variant={isSelected ? 'default' : 'outline'}
                   onClick={() => onSelectItem(item)}
                   className={cn(
-                     'h-6 cursor-pointer transition-colors bg-white/60 dark:bg-white/10 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]',
+                     'text-sm h-8 px-3 lg:text-xs lg:h-6 lg:px-2 cursor-pointer transition-colors bg-white/60 dark:bg-white/10 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]',
                      isSelected && 'dark:bg-white/100 text-primary-foreground border-primary hover:bg-primary/90'
                   )}
                >
@@ -163,16 +163,16 @@ export default function Page() {
             <button
                onClick={() => setIsCategoriesOpen((prev) => !prev)}
                aria-label={isCategoriesOpen ? 'Collapse categories' : 'Expand categories'}
-               className='lg:hidden fixed bottom-4 right-4 z-30 flex items-center justify-center size-9 rounded-full border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-md transition-transform active:scale-95'
+               className='lg:hidden fixed bottom-5 right-4 z-30 flex items-center justify-center size-9 rounded-full border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-md transition-transform active:scale-95'
             >
-               {isCategoriesOpen ? <ChevronDown className='size-4' /> : <ChevronUp className='size-4' />}
+               {isCategoriesOpen ? <X className='size-4' /> : <Menu className='size-4' />}
             </button>
 
-            <div className='fixed right-0 top-[65%] -translate-y-1/2 z-20 lg:static lg:translate-y-0'>
+            <div className='fixed right-0 bottom-16 z-20 lg:static lg:translate-y-0'>
                <ScrollArea
                   className={cn(
                      'transition-all duration-300 lg:[&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_180px,black_calc(100%-200px),transparent)] [&_[data-slot=scroll-area-scrollbar]]:hidden',
-                     'fixed top-1/2 -translate-y-1/2 z-20 w-fit max-h-[70vh]',
+                     'fixed bottom-0 z-20 w-fit max-h-[70vh]',
                      isCategoriesOpen
                         ? 'opacity-100 translate-x-0 pointer-events-auto'
                         : 'opacity-0 translate-x-6 pointer-events-none',
