@@ -33,7 +33,7 @@ type CategoryBadgeGroupProps = {
 
 function CategoryBadgeGroup({ items, selectedItemId, onSelectItem }: CategoryBadgeGroupProps) {
    return (
-      <div className='flex flex-col w-20 space-y-2 items-end'>
+      <div className='flex flex-col w-32 space-y-2 items-end'>
          {items.map((item) => {
             const isSelected = item.id === selectedItemId
             return (
