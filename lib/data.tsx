@@ -33,7 +33,7 @@ import { WorkItem, SectionId } from './definitions'
        thumbnail: '/artspherepreview.avif',
        alt: 'The ArtSphere thumbnail',
        description: 'The ArtSphere',
-       info: 'Web Design · School Project · 2024',
+       info: 'Web Design · Group School Project · 2024',
        details:
           'ArtSphere embodies a modern digital sanctuary for art, where minimalism allows creativity to take center stage. The contrast of black and white reflects both clarity and mystery, while subtle glows hint at the quiet aura of a gallery space. Every element is pared down to essentials—deliberate, restrained, and timeless—so that the design itself feels like an extension of the artworks it seeks to frame.',
        embedUrl:
@@ -52,7 +52,7 @@ import { WorkItem, SectionId } from './definitions'
        thumbnail: '/slicehauspreview.avif',
        alt: 'Slicehaus logo',
        description: 'Slicehaus',
-       info: 'Brand Identity · School Project · 2025',
+       info: 'Brand Identity · Group School Project · 2025',
        embedUrl:
           'https://embed.figma.com/proto/xuQnWFXgDs1Ilym2SvqmIl/Slicehaus--Community-?node-id=2003-22266&p=f&viewport=-144%2C-189%2C0.02&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=2003%3A22266&page-id=0%3A1&embed-host=share&hide-ui=1',
        tags: [{ label: 'Figma', icon: SiFigma },
