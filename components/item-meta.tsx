@@ -2,18 +2,21 @@ import { WorkItem } from '@/lib/definitions'
 import ItemTags from './item-tags'
 import ExtraMediaGrid from './extra-media-grid'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
-import { ArrowUpRight, Eye } from 'lucide-react'
+import { ArrowUpRight, Eye, X } from 'lucide-react'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 export default function ItemMeta({
    item,
    showViewButton,
    embedActive,
    onView,
+   onClose,
 }: {
    item: WorkItem
    showViewButton?: boolean
    embedActive?: boolean
    onView?: () => void
+   onClose?: () => void
 }) {
    return (
       <div className='flex flex-col gap-6 border-none text-foreground/80'>
@@ -27,25 +30,15 @@ export default function ItemMeta({
                   />
                )}
                <div>
-                  <div className='flex items-center gap-3'>
-                     <p className='text-2xl lg:text-3xl font-semibold'>{item.description}</p>
-                     {showViewButton && !embedActive && (
-                        <button
-                           onClick={onView}
-                           className='inline-flex items-center gap-1 rounded-full border border-foreground/30 px-3 py-1 text-xs lg:text-sm text-foreground/80 hover:bg-foreground/10 transition-colors shrink-0'
-                        >
-                           <Eye className='size-3.5' />
-                           View
-                        </button>
-                     )}
-                  </div>
+                  <p className='text-2xl lg:text-3xl font-semibold'>{item.description}</p>
+
                   <div className='text-sm lg:text-md'>
                      {item.certificate ? (
                         <PhotoProvider>
                            <PhotoView src={item.certificate}>
-                              <p className='text-sm lg:text-md cursor-pointer inline-flex items-center gap-1 underline-offset-4 hover:underline'>
+                              <p className='text-sm lg:text-md cursor-pointer underline-offset-4 hover:underline'>
                                  {item.info}
-                                 <ArrowUpRight className='size-4' />
+                                 <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
                               </p>
                            </PhotoView>
                         </PhotoProvider>
@@ -55,7 +48,28 @@ export default function ItemMeta({
                   </div>
                </div>
             </div>
-            <ItemTags item={item} />
+            <div className='flex items-center gap-3'>
+               <ItemTags item={item} />
+               {showViewButton && (
+                  <Tooltip>
+                     <TooltipTrigger>
+                        <div
+                           onClick={embedActive ? onClose : onView}
+                           className='flex size-10 lg:size-12 items-center shadow-lg border justify-center rounded-xl cursor-pointer transition-colors bg-zinc-900 dark:bg-white/10 shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'
+                        >
+                           {embedActive ? (
+                              <X className='text-white size-4 lg:size-6' />
+                           ) : (
+                              <Eye className='text-white size-4 lg:size-6' />
+                           )}
+                        </div>
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <p>{embedActive ? 'Close Preview' : 'Live Preview'}</p>
+                     </TooltipContent>
+                  </Tooltip>
+               )}
+            </div>
          </div>
 
          <ExtraMediaGrid item={item} />

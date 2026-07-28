@@ -119,51 +119,83 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
    if (item.video) {
       return (
          <div className='flex flex-col gap-4'>
-            {showEmbed && item.embedUrl ? (
+            {isPortrait ? (
+               <div className='flex justify-center'>
+                  <div
+                     ref={containerRef}
+                     style={{
+                        position: 'relative',
+                        height: `min(80vh, 90vw / ${item.aspectRatio})`,
+                        width: `min(90vw, min(80vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
+                        ...(isFullscreen && {
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                           width: '100%',
+                           height: '100%',
+                           background: 'black',
+                        }),
+                     }}
+                     className='overflow-hidden rounded-lg'
+                  >
+                     {showEmbed && item.embedUrl ? (
+                        <>
+                           {thumbnailOverlay}
+                           <iframe
+                              ref={iframeRef}
+                              className='h-full w-full rounded-lg'
+                              src={item.embedUrl}
+                              title={item.title}
+                           />
+                           {fullscreenButton}
+                        </>
+                     ) : (
+                        <div
+                           className='h-full w-full cursor-pointer overflow-hidden rounded-lg'
+                           onClick={() => setPopOpen(true)}
+                        >
+                           <video
+                              ref={bgVideoRef}
+                              autoPlay
+                              muted
+                              playsInline
+                              loop
+                              className='h-full w-full object-cover'
+                              src={item.thumbnail || item.video}
+                           />
+                        </div>
+                     )}
+                  </div>
+               </div>
+            ) : (
                <div
                   ref={containerRef}
                   className='w-full overflow-hidden rounded-lg relative'
                   style={{ aspectRatio: item.aspectRatio }}
                >
-                  {thumbnailOverlay}
-                  <iframe ref={iframeRef} className='h-full w-full rounded-lg' src={item.embedUrl} title={item.title} />
-                  {fullscreenButton}
-               </div>
-            ) : isPortrait ? (
-               <div className='flex justify-center' onClick={() => setPopOpen(true)}>
-                  <div
-                     className='cursor-pointer overflow-hidden rounded-lg'
-                     style={{
-                        height: `min(80vh, 90vw / ${item.aspectRatio})`,
-                        width: `min(90vw, min(80vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
-                     }}
-                  >
+                  {showEmbed && item.embedUrl ? (
+                     <>
+                        {thumbnailOverlay}
+                        <iframe
+                           ref={iframeRef}
+                           className='h-full w-full rounded-lg'
+                           src={item.embedUrl}
+                           title={item.title}
+                        />
+                        {fullscreenButton}
+                     </>
+                  ) : (
                      <video
                         ref={bgVideoRef}
                         autoPlay
                         muted
                         playsInline
                         loop
-                        className='h-full w-full object-cover'
+                        className='h-full w-full cursor-pointer object-cover'
+                        onClick={() => setPopOpen(true)}
                         src={item.thumbnail || item.video}
                      />
-                  </div>
-               </div>
-            ) : (
-               <div
-                  className='cursor-pointer overflow-hidden rounded-lg'
-                  style={{ aspectRatio: item.aspectRatio }}
-                  onClick={() => setPopOpen(true)}
-               >
-                  <video
-                     ref={bgVideoRef}
-                     autoPlay
-                     muted
-                     playsInline
-                     loop
-                     className='h-full w-full object-cover'
-                     src={item.thumbnail || item.video}
-                  />
+                  )}
                </div>
             )}
 
@@ -192,6 +224,7 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
                showViewButton={!!item.embedUrl}
                embedActive={showEmbed}
                onView={() => setShowEmbed(true)}
+               onClose={() => setShowEmbed(false)}
             />
          </div>
       )
@@ -287,6 +320,7 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
             showViewButton={!!item.embedUrl}
             embedActive={showEmbed}
             onView={() => setShowEmbed(true)}
+            onClose={() => setShowEmbed(false)}
          />
       </div>
    )
