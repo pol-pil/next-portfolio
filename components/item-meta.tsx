@@ -26,12 +26,20 @@ export default function ItemMeta({
                   <img
                      src={item.flatlogo || item.logo}
                      alt={`${item.title} logo`}
-                     className={`size-10 ${item.flatlogo ? 'brightness-0 dark:invert' : ''}`}
+                     className={`size-10 hidden lg:inline ${item.flatlogo ? 'brightness-0 dark:invert' : ''}`}
                   />
                )}
                <div>
-                  <p className='text-2xl lg:text-3xl font-semibold'>{item.description}</p>
-
+                  <div className='flex items-center gap-2'>
+                     <p className='text-2xl lg:text-3xl font-semibold'>{item.description}</p>
+                     {(item.logo || item.flatlogo) && (
+                        <img
+                           src={item.flatlogo || item.logo}
+                           alt={`${item.title} logo`}
+                           className={`size-5 inline lg:hidden ${item.flatlogo ? 'brightness-0 dark:invert' : ''}`}
+                        />
+                     )}
+                  </div>
                   <div className='text-sm lg:text-md'>
                      {item.certificate ? (
                         <PhotoProvider>

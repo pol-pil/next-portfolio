@@ -33,7 +33,7 @@ type CategoryBadgeGroupProps = {
 
 function CategoryBadgeGroup({ items, selectedItemId, onSelectItem }: CategoryBadgeGroupProps) {
    return (
-      <div className='flex flex-col w-32 space-y-2 items-end'>
+      <div className='flex flex-col w-28 space-y-2 items-end'>
          {items.map((item) => {
             const isSelected = item.id === selectedItemId
             return (
@@ -161,7 +161,7 @@ export default function Page() {
                {isCategoriesOpen ? <X className='size-4' /> : <Menu className='size-4' />}
             </button>
 
-            <div className='fixed right-0 bottom-16 z-20 lg:static lg:translate-y-0'>
+            <div className='fixed right-0 bottom-16 z-20 lg:static lg:translate-y-0 pointer-events-none'>
                <ScrollArea
                   className={cn(
                      'transition-all duration-300 lg:[&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_180px,black_calc(100%-200px),transparent)] [&_[data-slot=scroll-area-scrollbar]]:hidden',
