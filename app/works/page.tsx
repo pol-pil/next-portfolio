@@ -137,7 +137,7 @@ export default function Page() {
       <div className='lg:flex gap-4 px-4 lg:px-0 space-y-0 h-full text-foreground items-center justify-end'>
          <Dock
             items={dockItems}
-            className='fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'
+            className='fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-zinc-100/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'
             panelHeight={isMobile ? 60 : 68}
             baseItemSize={isMobile ? 42 : 50}
             magnification={isMobile ? 44 : 58}

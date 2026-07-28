@@ -30,10 +30,12 @@ import { WorkItem, SectionId } from './definitions'
        category: 'Layouts',
        title: 'ArtSphere',
        image: '/asm.avif',
-       thumbnail: '/artspherepreview.avif',
+       thumbnail: '/asvid.mp4',
+       load: '/artspherepreview.avif',
        alt: 'The ArtSphere thumbnail',
        description: 'The ArtSphere',
        info: 'Web Design · Group School Project · 2024',
+       video: 'asvid.mp4',
        details:
           'ArtSphere embodies a modern digital sanctuary for art, where minimalism allows creativity to take center stage. The contrast of black and white reflects both clarity and mystery, while subtle glows hint at the quiet aura of a gallery space. Every element is pared down to essentials—deliberate, restrained, and timeless—so that the design itself feels like an extension of the artworks it seeks to frame.',
        embedUrl:
@@ -42,6 +44,7 @@ import { WorkItem, SectionId } from './definitions'
        aspectRatio: 16 / 10.4,
        extra: ['asp1.avif', 'asp2.avif', 'asp3.avif', 'asp4.avif'],
        icon: '/artsphere.svg',
+       flatlogo: 'aslogo.svg',
     },
     {
        id: 'slicehaus-layout',
@@ -49,10 +52,12 @@ import { WorkItem, SectionId } from './definitions'
        category: 'Layouts',
        title: 'Slicehaus',
        image: '/shm.avif',
-       thumbnail: '/slicehauspreview.avif',
+       thumbnail: '/shvid.mp4',
+       load: '/slicehauspreview.avif',
        alt: 'Slicehaus logo',
        description: 'Slicehaus',
        info: 'Brand Identity · Group School Project · 2025',
+       video: 'shvid.mp4',
        embedUrl:
           'https://embed.figma.com/proto/xuQnWFXgDs1Ilym2SvqmIl/Slicehaus--Community-?node-id=2003-22266&p=f&viewport=-144%2C-189%2C0.02&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=2003%3A22266&page-id=0%3A1&embed-host=share&hide-ui=1',
        tags: [{ label: 'Figma', icon: SiFigma },
@@ -61,6 +66,7 @@ import { WorkItem, SectionId } from './definitions'
        aspectRatio: 16 / 10.4,
        extra: ['shp1.avif', 'shp2.avif', 'shp3.avif', 'shp4.avif', 'shp5.avif'],
        icon: '/slicehaus.svg',
+       logo: 'shlogo.svg',
     },
     {
        id: 'bondbook-layout',
@@ -68,16 +74,19 @@ import { WorkItem, SectionId } from './definitions'
        category: 'Layouts',
        title: 'BondBook',
        image: '/bbm.avif',
-       thumbnail: '/bbp1.avif',
+       thumbnail: '/bbvid.mp4',
+       load: '/bbp1.avif',
        alt: 'BondBook layout thumbnail',
        description: 'BondBook',
        info: 'Mobile App Design · School Project · 2024',
+       video: 'bbvid.mp4',
        embedUrl:
           'https://embed.figma.com/proto/QuentdTLxdNzwYDaEI2AL6/Pilar--John-Paul?node-id=437-316&p=f&viewport=473%2C-79%2C0.09&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=437%3A316&page-id=0%3A1&show-proto-sidebar=1&embed-host=share&hide-ui=1', // 'https://embed.figma.com/proto/QuentdTLxdNzwYDaEI2AL6/Pilar--John-Paul?node-id=943-2646&p=f&viewport=473%2C-79%2C0.09&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=943%3A2619&page-id=0%3A1&embed-host=share&hide-ui=1',
        tags: [{ label: 'Figma', icon: SiFigma }],
        aspectRatio: 9 / 18.4,
        extra: ['/bbp1.avif', '/bbp2.avif', '/bbp3.avif', '/bbp4.avif', '/bbp5.avif', 'bbp6.avif'],
        icon: '/bondbook.svg',
+       flatlogo: 'bblogo.svg',
     },
     {
        id: 'varre-poster',
@@ -225,6 +234,8 @@ import { WorkItem, SectionId } from './definitions'
        ],
        aspectRatio: 16 / 9,
        extra: ['eqp1.avif', 'eqp2.avif', 'eqp3.avif', 'eqp4.avif', 'eqp5.avif'],
+       logo: 'eqlogo.svg',
+       certificate: 'eqcert.avif',
     },
     {
        id: 'casa-app',
@@ -265,6 +276,7 @@ import { WorkItem, SectionId } from './definitions'
        ],
        aspectRatio: 9 / 18.5,
        extra: ['/ip1.avif', '/ip2.avif', '/ip3.avif', '/ip4.avif', '/ip5.avif'],
+       logo: 'iplogo.svg',
     },
  ]
  
