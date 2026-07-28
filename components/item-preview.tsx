@@ -223,7 +223,8 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
                            {thumbnailOverlay}
                            <iframe
                               ref={iframeRef}
-                              className="h-full w-full rounded-lg"
+                              className='rounded-lg'
+                              style={{ height: '100%', width: '100%' }}
                               src={item.embedUrl}
                               title={item.title}
                            />
