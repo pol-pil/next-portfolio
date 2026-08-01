@@ -20,7 +20,7 @@ export default function ExtraMediaGrid({ item }: { item: WorkItem }) {
                         <div
                            key={src}
                            onClick={() => setOpenVideo(src)}
-                           className='w-full flex-1 min-w-35 h-[12em] shadow-md rounded-md overflow-hidden cursor-pointer'
+                           className='w-full flex-1 min-w-35 h-[12em] shadow-xl rounded-md overflow-hidden cursor-pointer'
                         >
                            <video src={src} muted className='h-full w-full object-cover' />
                         </div>
@@ -32,7 +32,7 @@ export default function ExtraMediaGrid({ item }: { item: WorkItem }) {
                         <img
                            src={src}
                            alt={`${item.title} extra ${index + 1}`}
-                           className='w-full flex-1 min-w-35 h-[12em] shadow-md rounded-md object-cover'
+                           className='w-full flex-1 min-w-35 h-[12em] shadow-xl rounded-md object-cover'
                         />
                      </PhotoView>
                   )

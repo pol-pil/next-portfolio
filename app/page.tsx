@@ -1,43 +1,65 @@
 'use client'
 
+import Dock from '@/components/Dock'
+import Heroname from '@/components/heroname'
+import ProfilePopover from '@/components/profile-popover'
+import { Eye } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Home() {
    const router = useRouter()
-   const [isLeaving, setIsLeaving] = useState(false)
+   const [isMobile, setIsMobile] = useState(false)
+   const { theme } = useTheme()
+   console.log('current theme:', theme)
 
    useEffect(() => {
-      const leaveTimer = setTimeout(() => setIsLeaving(true), 900)
-      const redirectTimer = setTimeout(() => router.replace('/works'), 1200)
+      const checkSize = () => setIsMobile(window.innerWidth < 1024)
+      checkSize()
+      window.addEventListener('resize', checkSize)
+      return () => window.removeEventListener('resize', checkSize)
+   }, [])
 
-      return () => {
-         clearTimeout(leaveTimer)
-         clearTimeout(redirectTimer)
-      }
-   }, [router])
+   const tabs = [
+      {
+         icon: <img src='/icon.svg' alt='Logo' className='size-4 brightness-0 dark:invert' />,
+         label: 'Paul Pilar',
+         className: 'rounded-lg',
+         onClick: () => router.push('/'),
+         isActive: false,
+         isTransparent: true,
+      },
+      {
+         icon: <Eye className='size-5' />,
+         label: 'Works',
+         className: 'rounded-lg',
+         onClick: () => router.push('/works'),
+      },
+      {
+         icon: <ProfilePopover />,
+         label: 'Contact',
+         isTransparent: true,
+         className: 'rounded-full ml-2 border-none shadow-none',
+         isActive: false,
+         onClick: () => {},
+      },
+   ]
 
    return (
-      <AnimatePresence>
-         {!isLeaving && (
-            <motion.div
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               exit={{ opacity: 0 }}
-               transition={{ duration: 0.3 }}
-               className='fixed inset-0 flex flex-col items-center justify-center gap-4 bg-background text-foreground'
-            >
-               <motion.img
-                  src='/icon.svg'
-                  alt='Logo'
-                  className='size-10 brightness-0 dark:invert'
-                  animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-               />
-               <p className='text-sm text-muted-foreground'>Homepage coming soon…</p>
-            </motion.div>
-         )}
-      </AnimatePresence>
+      <div className='relative'>
+         <Dock
+            items={tabs}
+            className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`}
+            panelHeight={isMobile ? 60 : 68}
+            baseItemSize={isMobile ? 42 : 50}
+            magnification={isMobile ? 44 : 58}
+         />
+         <div className='flex h-dvh lg:items-end justify-between'>
+            <span className='w-[80%] lg:w-[60%] m-8 lg:m-20 lg:mb-24'>
+               <Heroname mode={theme === 'light' ? 'light' : 'dark'} />
+            </span>
+         </div>
+      </div>
    )
 }

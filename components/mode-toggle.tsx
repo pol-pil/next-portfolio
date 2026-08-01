@@ -1,7 +1,8 @@
 import { ThemeToggleButton2 } from '@/components/ui/skiper-ui/skiper4';
 import { useThemeToggle } from './ui/skiper-ui/skiper26';
+import { cn } from '@/lib/utils';
 
-export function ModeToggle() {
+export function ModeToggle({ className }: { className?: string }) {
    const { setCrazyDarkTheme, setCrazyLightTheme } = useThemeToggle({
       variant: 'rectangle',
       start: 'bottom-up',
@@ -17,8 +18,8 @@ export function ModeToggle() {
    }
 
    return (
-      <div onClick={toggleTheme}>
-         <ThemeToggleButton2 className='size-8 bg-transparent rounded-lg p-2 cursor-pointer' />
+      <div onClick={toggleTheme} className='inline-flex'>
+         <ThemeToggleButton2 className={cn('size-8 bg-transparent rounded-lg p-2 cursor-pointer', className)} />
       </div>
    )
 }
