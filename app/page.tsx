@@ -55,10 +55,10 @@ export default function Home() {
             baseItemSize={isMobile ? 42 : 50}
             magnification={isMobile ? 44 : 58}
          />
-         <div className='flex h-dvh lg:items-end'>
-            <div className='w-[80%] lg:w-[60%] m-8 lg:m-20 lg:mb-24'>
+         <div className='flex h-dvh lg:items-end justify-between'>
+            <span className='w-[80%] lg:w-[60%] m-8 lg:m-20 lg:mb-24'>
                <Heroname mode={theme === 'light' ? 'light' : 'dark'} />
-            </div>
+            </span>
          </div>
       </div>
    )
