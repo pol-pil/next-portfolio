@@ -8,6 +8,7 @@ export type WorkItem = {
     image: string
     video?: string
     thumbnail?: string
+    load?: string
     alt: string
     description: string
     info?: string
@@ -21,4 +22,7 @@ export type WorkItem = {
     aspectRatio: number
     extra?: string[]
     icon?: string
+    logo?: string
+    flatlogo?: string
+    certificate?: string
  }

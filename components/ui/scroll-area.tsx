@@ -44,7 +44,7 @@ function ScrollBar({
         "data-hovering:opacity-100 data-hovering:pointer-events-auto",
         "data-scrolling:opacity-100 data-scrolling:pointer-events-auto data-scrolling:duration-0",
         "data-horizontal:h-2.5 data-horizontal:flex-col data-horizontal:border-t data-horizontal:border-t-transparent",
-        "data-vertical:h-full data-vertical:w-2.5 data-vertical:border-l data-vertical:border-l-transparent",
+        "data-vertical:h-full data-vertical:w-2 data-vertical:border-l data-vertical:border-l-transparent",
         className
       )}
       {...props}
