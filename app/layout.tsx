@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
    title: 'Paul Pilar',
-   description: 'A portfolio website for John Paul Pilar, a Designer and Developer.',
+   description: 'Portfolio website of John Paul Pilar, featuring UI/UX design, frontend development, and creative projects.',
 }
 
 export default function RootLayout({
