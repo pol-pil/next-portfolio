@@ -34,7 +34,7 @@ export const workItems: WorkItem[] = [
       load: '/artspherepreview.avif',
       alt: 'The ArtSphere thumbnail',
       description: 'The ArtSphere',
-      info: 'Web Design · Group School Project · 2024',
+      info: 'Web UI/UX Design · Group School Project · 2024',
       video: 'asvid.mp4',
       details:
          'ArtSphere embodies a modern digital sanctuary for art, where minimalism allows creativity to take center stage. The contrast of black and white reflects both clarity and mystery, while subtle glows hint at the quiet aura of a gallery space. Every element is pared down to essentials—deliberate, restrained, and timeless—so that the design itself feels like an extension of the artworks it seeks to frame.',
@@ -78,7 +78,7 @@ export const workItems: WorkItem[] = [
       load: '/bbp1.avif',
       alt: 'BondBook layout thumbnail',
       description: 'BondBook',
-      info: 'Mobile App Design · School Project · 2024',
+      info: 'Mobile UI/UX Design · School Project · 2024',
       video: 'bbvid.mp4',
       embedUrl:
          'https://embed.figma.com/proto/QuentdTLxdNzwYDaEI2AL6/Pilar--John-Paul?node-id=437-316&p=f&viewport=473%2C-79%2C0.09&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=437%3A316&page-id=0%3A1&show-proto-sidebar=1&embed-host=share&hide-ui=1', // 'https://embed.figma.com/proto/QuentdTLxdNzwYDaEI2AL6/Pilar--John-Paul?node-id=943-2646&p=f&viewport=473%2C-79%2C0.09&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=943%3A2619&page-id=0%3A1&embed-host=share&hide-ui=1',
