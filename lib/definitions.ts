@@ -25,4 +25,6 @@ export type WorkItem = {
     logo?: string
     flatlogo?: string
     certificate?: string
+    mockup?: string
+    color?: string
  }

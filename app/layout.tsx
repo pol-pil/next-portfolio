@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Analytics } from '@vercel/analytics/react'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { SelectionProvider } from '@/context/selection-context'
 
 const geistSans = Geist({
    variable: '--font-geist-sans',
@@ -18,7 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
    title: 'Paul Pilar',
-   description: 'Portfolio website of John Paul Pilar, featuring UI/UX design, frontend development, and creative projects.',
+   description:
+      'Portfolio website of John Paul Pilar, featuring UI/UX design, frontend development, and creative projects.',
 }
 
 export default function RootLayout({
@@ -34,9 +36,9 @@ export default function RootLayout({
       >
          <body className='min-h-full flex flex-col'>
             <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-            <TooltipProvider>
-               <Analytics />
-               {children}
+               <TooltipProvider>
+                  <Analytics />
+                  <SelectionProvider>{children}</SelectionProvider>
                </TooltipProvider>
             </ThemeProvider>
          </body>

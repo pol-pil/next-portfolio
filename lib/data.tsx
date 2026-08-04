@@ -25,6 +25,31 @@ export const sections: Array<{ id: SectionId; label: string }> = [
 
 export const workItems: WorkItem[] = [
    {
+      id: 'slicehaus-layout',
+      section: 'visuals',
+      category: 'Layouts',
+      title: 'Slicehaus',
+      image: '/shm.avif',
+      thumbnail: '/shvid.mp4',
+      load: '/slicehauspreview.avif',
+      alt: 'Slicehaus logo',
+      description: 'Slicehaus',
+      info: 'Brand Identity · Group School Project · 2025',
+      video: 'shvid.mp4',
+      embedUrl:
+         'https://embed.figma.com/proto/xuQnWFXgDs1Ilym2SvqmIl/Slicehaus--Community-?node-id=2003-22266&p=f&viewport=-144%2C-189%2C0.02&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=2003%3A22266&page-id=0%3A1&embed-host=share&hide-ui=1',
+      tags: [
+         { label: 'Figma', icon: SiFigma },
+         { label: 'Photoshop', icon: PhotoshopIcon },
+      ],
+      aspectRatio: 16 / 9.6,
+      extra: ['shp1.avif', 'shp2.avif', 'shp3.avif', 'shp4.avif', 'shp5.avif'],
+      icon: '/slicehaus.svg',
+      logo: 'shlogo.svg',
+      mockup: 'shmock.avif',
+      color: '#8a1e1e',
+   },
+   {
       id: 'artsphere-layout',
       section: 'visuals',
       category: 'Layouts',
@@ -41,32 +66,12 @@ export const workItems: WorkItem[] = [
       embedUrl:
          'https://embed.figma.com/proto/zR7MV8n7ismhZS2bup8sMq/Virtual-Tour-App-for-Art-Gallery--Copy-?node-id=660-113&page-id=0%3A1&starting-point-node-id=660%3A113&scaling=scale-down-width&content-scaling=fixed&embed-host=share&hide-ui=1',
       tags: [{ label: 'Figma', icon: SiFigma }],
-      aspectRatio: 16 / 10.4,
+      aspectRatio: 16 / 9.6,
       extra: ['asp1.avif', 'asp2.avif', 'asp3.avif', 'asp4.avif'],
       icon: '/artsphere.svg',
       flatlogo: 'aslogo.svg',
-   },
-   {
-      id: 'slicehaus-layout',
-      section: 'visuals',
-      category: 'Layouts',
-      title: 'Slicehaus',
-      image: '/shm.avif',
-      thumbnail: '/shvid.mp4',
-      load: '/slicehauspreview.avif',
-      alt: 'Slicehaus logo',
-      description: 'Slicehaus',
-      info: 'Brand Identity · Group School Project · 2025',
-      video: 'shvid.mp4',
-      embedUrl:
-         'https://embed.figma.com/proto/xuQnWFXgDs1Ilym2SvqmIl/Slicehaus--Community-?node-id=2003-22266&p=f&viewport=-144%2C-189%2C0.02&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=2003%3A22266&page-id=0%3A1&embed-host=share&hide-ui=1',
-      tags: [{ label: 'Figma', icon: SiFigma },
-         { label: 'Photoshop', icon: PhotoshopIcon },
-      ],
-      aspectRatio: 16 / 10.4,
-      extra: ['shp1.avif', 'shp2.avif', 'shp3.avif', 'shp4.avif', 'shp5.avif'],
-      icon: '/slicehaus.svg',
-      logo: 'shlogo.svg',
+      mockup: 'asmock.avif',
+      color: '#0f6126',
    },
    {
       id: 'bondbook-layout',
@@ -87,6 +92,8 @@ export const workItems: WorkItem[] = [
       extra: ['/bbp1.avif', '/bbp2.avif', '/bbp3.avif', '/bbp4.avif', '/bbp5.avif', 'bbp6.avif'],
       icon: '/bondbook.svg',
       flatlogo: 'bblogo.svg',
+      mockup: 'bbmock.avif',
+      color: '#61570f',
    },
    {
       id: 'varre-poster',
@@ -103,6 +110,8 @@ export const workItems: WorkItem[] = [
       ],
       aspectRatio: 4 / 5,
       extra: ['vp1.avif', 'varre.gif', 'vp2.avif'],
+      mockup: 'vpmock.avif',
+      color: '#6b7962',
    },
    {
       id: 'catholic-poster',
@@ -115,7 +124,9 @@ export const workItems: WorkItem[] = [
       info: 'School Project · 2024',
       tags: [{ label: 'Figma', icon: SiFigma }],
       aspectRatio: 3 / 4,
-      extra: ['cp1.avif'],
+      extra: ['cp2.avif', 'cp1.avif'],
+      mockup: 'chmock.avif',
+      color: '#0f5561',
    },
    {
       id: 'technoday-poster',
@@ -128,7 +139,8 @@ export const workItems: WorkItem[] = [
       info: 'Event Poster Design · 2025',
       tags: [{ label: 'Photoshop', icon: PhotoshopIcon }],
       aspectRatio: 1 / 1.41,
-      extra: ['tdp2.avif', 'tdp3.avif', 'tdp1.avif'],   
+      extra: ['tdp2.avif', 'tdp3.avif', 'tdp1.avif'],
+      mockup: 'tdmock.avif',
    },
    {
       id: 'whywait-poster',
@@ -145,6 +157,8 @@ export const workItems: WorkItem[] = [
       ],
       aspectRatio: 16 / 9,
       extra: ['wp1.avif', 'wp2.avif'],
+      mockup: 'wpmock.avif',
+      color: '#944b4b',
    },
    {
       id: 'resto-artwork',
@@ -157,7 +171,9 @@ export const workItems: WorkItem[] = [
       info: 'Digital Art · 2024',
       tags: [{ label: 'Photoshop', icon: PhotoshopIcon }],
       aspectRatio: 16 / 9,
-      extra: ['rp1.avif', 'rp2.mp4']
+      extra: ['rp1.avif', 'rp2.mp4'],
+      mockup: 'rpmock.avif',
+      color: '#1e8a83',
    },
    {
       id: 'jane-artwork',
@@ -171,6 +187,8 @@ export const workItems: WorkItem[] = [
       tags: [{ label: 'Photoshop', icon: PhotoshopIcon }],
       aspectRatio: 16 / 9,
       extra: ['jp1.avif', 'jp2.mp4'],
+      mockup: 'jpmock.avif',
+      color: '#1e648a',
    },
    {
       id: 'mirror-artwork',
@@ -184,6 +202,8 @@ export const workItems: WorkItem[] = [
       tags: [{ label: 'Photoshop', icon: PhotoshopIcon }],
       aspectRatio: 2 / 3,
       extra: ['nhp1.avif', 'nhp2.avif'],
+      mockup: 'nhmock.avif',
+      color: '#944b65',
    },
    {
       id: 'juliana-artwork',
@@ -197,9 +217,11 @@ export const workItems: WorkItem[] = [
       tags: [{ label: 'Photoshop', icon: PhotoshopIcon }],
       aspectRatio: 2 / 3,
       extra: ['jlp1.avif', 'jlp2.mp4'],
+      mockup: 'jlmock.avif',
+      color: '#6a8036',
    },
    {
-      id: 'cleanrasdasdot-poster',
+      id: 'cleanrot-poster',
       section: 'visuals',
       category: 'Artworks',
       title: 'Cleanrot',
@@ -210,6 +232,8 @@ export const workItems: WorkItem[] = [
       tags: [{ label: 'Photoshop', icon: PhotoshopIcon }],
       aspectRatio: 9 / 16,
       extra: ['crp1.avif', 'crp2.gif'],
+      mockup: 'crmock.avif',
+      color: '#4d6bc6',
    },
    {
       id: 'eResq-app',

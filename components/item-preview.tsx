@@ -19,7 +19,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
    const containerRef = useRef<HTMLDivElement>(null)
    const bgVideoRef = useRef<HTMLVideoElement>(null)
    const prevItemId = useRef(item.id)
-   
+
    useEffect(() => {
       if (prevItemId.current !== item.id) {
          prevItemId.current = item.id
@@ -80,17 +80,13 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
 
    const thumbnailOverlay = (
       <div
-      className={cn(
-         'absolute inset-0 z-2 overflow-hidden rounded-lg transition-opacity duration-400',
-         isLoaded
-           ? 'opacity-0 pointer-events-none'
-           : 'opacity-100 pointer-events-auto'
-       )}
+         className={cn(
+            'absolute inset-0 z-2 overflow-hidden rounded-lg transition-opacity duration-400',
+            isLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+         )}
       >
-         <img src={item.load} alt='' className="h-full w-full object-cover" />
-         <div
-className="absolute inset-0 flex items-center justify-center bg-black/80"
-         >
+         <img src={item.load} alt='' className='h-full w-full object-cover' />
+         <div className='absolute inset-0 flex items-center justify-center bg-black/80'>
             <div className='flex flex-col justify-center items-center text-center'>
                <Spinner className='size-8 text-white' />
                <p className='text-white'>Loading Interactive Preview</p>
@@ -102,7 +98,8 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
    const fullscreenButton = isLoaded && (
       <Button
          onClick={toggleFullscreen}
-         className="absolute bottom-2 right-2 z-10 rounded-md bg-black/50 p-1.5 text-white backdrop-blur-sm hover:bg-black/70"     >
+         className='absolute bottom-2 right-2 z-10 rounded-md bg-black/50 p-1.5 text-white backdrop-blur-sm hover:bg-black/70'
+      >
          {isFullscreen ? <Minimize className='size-4' /> : <Maximize className='size-4' />}
       </Button>
    )
@@ -118,15 +115,15 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
 
    if (item.video) {
       return (
-         <div className='flex flex-col gap-4'>
+         <div className='flex flex-col gap-2 pt-4'>
             {isPortrait ? (
                <div className='flex justify-center'>
                   <div
                      ref={containerRef}
                      style={{
                         position: 'relative',
-                        height: `min(80vh, 90vw / ${item.aspectRatio})`,
-                        width: `min(90vw, min(80vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
+                        height: `min(86vh, 90vw / ${item.aspectRatio})`,
+                        width: `min(90vw, min(86vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
                         ...(isFullscreen && {
                            display: 'flex',
                            alignItems: 'center',
@@ -231,7 +228,7 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
    }
 
    return (
-      <div className='h-full gap-4'>
+      <div className='h-full pt-4'>
          {item.embedUrl ? (
             isPortrait ? (
                <div className='flex justify-center'>
@@ -297,8 +294,8 @@ className="absolute inset-0 flex items-center justify-center bg-black/80"
                      <img
                         className='rounded-lg object-contain cursor-pointer'
                         style={{
-                           height: 'min(80vh, 90vw / ' + item.aspectRatio + ')',
-                           width: `min(90vw, min(80vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
+                           height: 'min(86vh, 90vw / ' + item.aspectRatio + ')',
+                           width: `min(90vw, min(86vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
                         }}
                         src={item.image}
                         alt={item.alt}

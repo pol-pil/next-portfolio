@@ -3,16 +3,18 @@
 import Dock from '@/components/Dock'
 import ItemPreview from '@/components/item-preview'
 import ProfilePopover from '@/components/profile-popover'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { getDefaultItem, getItemsByCategory, sections, workItems } from '@/lib/data'
 import { SectionId, WorkItem } from '@/lib/definitions'
 import { cn } from '@/lib/utils'
-import { Astroid, ChevronDown, ChevronUp, Code, Menu, X } from 'lucide-react'
+import { Astroid, Code, Menu, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { CategoryBadgeGroup } from '@/components/category-badge-group'
+import { useBadgeSelection } from '@/hooks/use-badge-selection'
+import { useSelection } from '@/context/selection-context'
+import { CategorySidebar } from '@/components/category-sidebar'
 
 const MOBILE_BREAKPOINT = 1024
 
@@ -25,49 +27,24 @@ function scrollScrollAreaToTop(scrollAreaRef: React.RefObject<HTMLDivElement | n
    viewport?.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-type CategoryBadgeGroupProps = {
-   items: WorkItem[]
-   selectedItemId: WorkItem['id']
-   onSelectItem: (item: WorkItem) => void
-}
-
-function CategoryBadgeGroup({ items, selectedItemId, onSelectItem }: CategoryBadgeGroupProps) {
-   return (
-      <div className='flex flex-col w-28 space-y-2 items-end'>
-         {items.map((item) => {
-            const isSelected = item.id === selectedItemId
-            return (
-               <Badge
-                  key={item.id}
-                  data-item-id={item.id}
-                  variant={isSelected ? 'default' : 'outline'}
-                  onClick={() => onSelectItem(item)}
-                  className={cn(
-                     'text-sm h-8 px-3 lg:text-xs lg:h-6 lg:px-2 cursor-pointer transition-colors bg-white/60 dark:bg-white/10 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]',
-                     isSelected && 'dark:bg-white/100 bg-black/90 dark:text-black text-white border-primary hover:bg-primary/90'
-                  )}
-               >
-                  {item.title}
-               </Badge>
-            )
-         })}
-      </div>
-   )
-}
-
 export default function Page() {
    const router = useRouter()
+   const { selectedItemId, setSelectedItemId } = useSelection()
    const [activeSection, setActiveSection] = useState<SectionId>('visuals')
-   const [selectedItemId, setSelectedItemId] = useState(getDefaultItem('visuals').id)
    const [isMobile, setIsMobile] = useState(false)
    const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
-
    const selectedItem = workItems.find((item) => item.id === selectedItemId) ?? getDefaultItem(activeSection)
+   const activeItemId = selectedItemId ?? selectedItem.id
    const sectionItems = useMemo(() => workItems.filter((item) => item.section === activeSection), [activeSection])
    const sidebarCategories = useMemo(() => getItemsByCategory(sectionItems), [sectionItems])
-
    const scrollRef = useRef<HTMLDivElement>(null)
-   const badgeContainerRef = useRef<HTMLDivElement>(null)
+   const { badgeContainerRef, selectItem, centerSelectedBadge } = useBadgeSelection()
+
+   useEffect(() => {
+      if (!selectedItemId) {
+         setSelectedItemId(getDefaultItem('visuals').id)
+      }
+   }, [])
 
    useEffect(() => {
       const updateIsMobile = () => setIsMobile(isMobileViewport())
@@ -78,6 +55,13 @@ export default function Page() {
       return () => window.removeEventListener('resize', updateIsMobile)
    }, [])
 
+   useEffect(() => {
+      if (activeItemId) {
+         const timeout = setTimeout(() => centerSelectedBadge(activeItemId), 100)
+         return () => clearTimeout(timeout)
+      }
+   }, [activeItemId])
+
    function handleSectionChange(value: string) {
       const nextSection = value as SectionId
       setActiveSection(nextSection)
@@ -85,25 +69,9 @@ export default function Page() {
    }
 
    function handleItemSelect(item: WorkItem) {
-      setActiveSection(item.section)
-      setSelectedItemId(item.id)
-
-      requestAnimationFrame(() => centerSelectedBadge(item.id))
-
-      if (isMobileViewport()) {
-         window.scrollTo({ top: 0, behavior: 'smooth' })
-      } else {
-         scrollScrollAreaToTop(scrollRef)
-      }
-   }
-
-   function centerSelectedBadge(itemId: WorkItem['id']) {
-      const badge = badgeContainerRef.current?.querySelector<HTMLElement>(`[data-item-id="${itemId}"]`)
-
-      badge?.scrollIntoView({
-         behavior: 'smooth',
-         block: 'center',
-         inline: 'nearest',
+      selectItem(item, scrollRef, (selected) => {
+         setActiveSection(selected.section)
+         setSelectedItemId(selected.id)
       })
    }
 
@@ -161,30 +129,13 @@ export default function Page() {
                {isCategoriesOpen ? <X className='size-4' /> : <Menu className='size-4' />}
             </button>
 
-            <div className='fixed right-0 bottom-16 z-20 lg:static lg:translate-y-0 pointer-events-none'>
-               <ScrollArea
-                  className={cn(
-                     'transition-all duration-300 lg:[&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_180px,black_calc(100%-200px),transparent)] [&_[data-slot=scroll-area-scrollbar]]:hidden',
-                     'fixed bottom-0 z-20 w-fit max-h-[70vh]',
-                     isCategoriesOpen
-                        ? 'opacity-100 translate-x-0 pointer-events-auto'
-                        : 'opacity-0 translate-x-6 pointer-events-none',
-                     'lg:static lg:right-auto lg:top-auto lg:translate-y-0 lg:translate-x-0 lg:z-auto lg:w-full lg:h-90 lg:max-h-none lg:opacity-100 lg:pointer-events-auto'
-                  )}
-               >
-                  <div ref={badgeContainerRef} className='px-4 lg:py-34'>
-                     {Object.entries(sidebarCategories).map(([category, items]) => (
-                        <div key={category} className='py-2'>
-                           <CategoryBadgeGroup
-                              items={items}
-                              selectedItemId={selectedItemId}
-                              onSelectItem={handleItemSelect}
-                           />
-                        </div>
-                     ))}
-                  </div>
-               </ScrollArea>
-            </div>
+            <CategorySidebar
+               sidebarCategories={sidebarCategories}
+               activeItemId={activeItemId}
+               isCategoriesOpen={isCategoriesOpen}
+               badgeContainerRef={badgeContainerRef}
+               onSelectItem={handleItemSelect}
+            />
          </div>
 
          <div className='min-w-0 flex-1 lg:h-full border-none p-0 pb-8 lg:pb-0'>
@@ -195,7 +146,7 @@ export default function Page() {
                         ref={scrollRef}
                         className='h-full w-full
                            [&_[data-slot=scroll-area-viewport]]:sm:px-8
-                           [&_[data-slot=scroll-area-viewport]]:xl:px-46
+                           [&_[data-slot=scroll-area-viewport]]:lg:px-58
                            [&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_0px,black_calc(97%-0px),transparent)]'
                      >
                         <ItemPreview

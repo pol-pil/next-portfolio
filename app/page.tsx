@@ -1,18 +1,42 @@
 'use client'
 
+import { CategorySidebar } from '@/components/category-sidebar'
 import Dock from '@/components/Dock'
 import Heroname from '@/components/heroname'
+import MeshGradient from '@/components/mesh-gradient'
 import ProfilePopover from '@/components/profile-popover'
+import { useSelection } from '@/context/selection-context'
+import { useBadgeSelection } from '@/hooks/use-badge-selection'
+import { getItemsByCategory, workItems } from '@/lib/data'
+import { WorkItem } from '@/lib/definitions'
 import { Eye } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+const homeItems = workItems.filter((item) => item.section === 'visuals')
+const homeCategories = getItemsByCategory(homeItems)
+const DEFAULT_MESH_COLORS = ['#1e3a8a', '#1e3a8a', '#000000']
+
 export default function Home() {
    const router = useRouter()
    const [isMobile, setIsMobile] = useState(false)
    const { theme } = useTheme()
-   console.log('current theme:', theme)
+   const { setSelectedItemId } = useSelection()
+   const { badgeContainerRef } = useBadgeSelection()
+   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
+   const [hoveredItem, setHoveredItem] = useState<WorkItem | null>(null)
+   const meshColors = hoveredItem?.color ? [hoveredItem.color, hoveredItem.color, '#000000'] : DEFAULT_MESH_COLORS
+   const [displayedItem, setDisplayedItem] = useState<WorkItem | null>(null)
+
+   useEffect(() => {
+      if (hoveredItem) setDisplayedItem(hoveredItem)
+   }, [hoveredItem])
+
+   function handleSelect(item: WorkItem) {
+      setSelectedItemId(item.id)
+      router.push('/works')
+   }
 
    useEffect(() => {
       const checkSize = () => setIsMobile(window.innerWidth < 1024)
@@ -34,7 +58,10 @@ export default function Home() {
          icon: <Eye className='size-5' />,
          label: 'Works',
          className: 'rounded-lg',
-         onClick: () => router.push('/works'),
+         onClick: () => {
+            setSelectedItemId('slicehaus-layout')
+            router.push('/works')
+         },
       },
       {
          icon: <ProfilePopover />,
@@ -55,10 +82,41 @@ export default function Home() {
             baseItemSize={isMobile ? 42 : 50}
             magnification={isMobile ? 44 : 58}
          />
-         <div className='flex h-dvh lg:items-end justify-between'>
-            <span className='w-[80%] lg:w-[60%] m-8 lg:m-20 lg:mb-24'>
-               <Heroname mode={theme === 'light' ? 'light' : 'dark'} />
-            </span>
+         <div ref={badgeContainerRef} className='fixed inset-y-0 pr-2 right-0 z-10 flex items-center'>
+            <CategorySidebar
+               sidebarCategories={homeCategories}
+               activeItemId=''
+               isCategoriesOpen={isCategoriesOpen}
+               badgeContainerRef={badgeContainerRef}
+               onSelectItem={handleSelect}
+               onHoverItem={setHoveredItem}
+            />
+         </div>
+
+         <div className='absolute w-full h-full opacity-0 dark:opacity-20'>
+            <MeshGradient colors={meshColors} speed={2} />
+         </div>
+
+         <div className='relative flex flex-col gap-6 justify-end h-dvh mx-4 lg:mx-40'>
+            <div className='flex justify-end'>
+               <div
+                  className='w-2xl overflow-hidden rounded-lg transition-opacity duration-400 ease-in-out'
+                  style={{ aspectRatio: 16 / 9, opacity: hoveredItem ? 1 : 0 }}
+               >
+                  {displayedItem && (
+                     <img
+                        className='h-full w-full object-cover rounded-lg'
+                        src={displayedItem.mockup || displayedItem.image}
+                        alt={displayedItem.alt}
+                     />
+                  )}
+               </div>
+            </div>
+            <div className='flex mb-24'>
+               <div className='w-sm lg:w-3xl'>
+                  <Heroname mode={theme === 'light' ? 'light' : 'dark'} />
+               </div>
+            </div>
          </div>
       </div>
    )
