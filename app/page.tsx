@@ -27,10 +27,23 @@ export default function Home() {
    const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
    const [hoveredItem, setHoveredItem] = useState<WorkItem | null>(null)
    const meshColors = hoveredItem?.color ? [hoveredItem.color, hoveredItem.color, '#000000'] : DEFAULT_MESH_COLORS
-   const [displayedItem, setDisplayedItem] = useState<WorkItem | null>(null)
+   const [layers, setLayers] = useState<[WorkItem | null, WorkItem | null]>([null, null])
+   const [activeLayer, setActiveLayer] = useState<0 | 1>(0)
 
    useEffect(() => {
-      if (hoveredItem) setDisplayedItem(hoveredItem)
+      if (!hoveredItem) return
+
+      const currentSrc = layers[activeLayer]?.mockup || layers[activeLayer]?.image
+      const nextSrc = hoveredItem.mockup || hoveredItem.image
+      if (currentSrc === nextSrc) return
+
+      const nextLayer = activeLayer === 0 ? 1 : 0
+      setLayers((prev) => {
+         const updated = [...prev] as [WorkItem | null, WorkItem | null]
+         updated[nextLayer] = hoveredItem
+         return updated
+      })
+      setActiveLayer(nextLayer)
    }, [hoveredItem])
 
    function handleSelect(item: WorkItem) {
@@ -100,16 +113,18 @@ export default function Home() {
          <div className='relative flex flex-col gap-6 justify-end h-dvh mx-4 lg:mx-40'>
             <div className='flex justify-end'>
                <div
-                  className='w-2xl overflow-hidden rounded-lg transition-opacity duration-400 ease-in-out'
+                  className='relative w-2xl overflow-hidden rounded-lg transition-opacity duration-500 ease-in-out'
                   style={{ aspectRatio: 16 / 9, opacity: hoveredItem ? 1 : 0 }}
                >
-                  {displayedItem && (
+                  {layers.map((item, i) => (
                      <img
-                        className='h-full w-full object-cover rounded-lg'
-                        src={displayedItem.mockup || displayedItem.image}
-                        alt={displayedItem.alt}
+                        key={i}
+                        className='absolute inset-0 h-full w-full object-cover rounded-lg transition-opacity duration-500 ease-in-out'
+                        style={{ opacity: activeLayer === i ? 1 : 0 }}
+                        src={item ? item.mockup || item.image : undefined}
+                        alt={item?.alt ?? ''}
                      />
-                  )}
+                  ))}
                </div>
             </div>
             <div className='flex mb-24'>
