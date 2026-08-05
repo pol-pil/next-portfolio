@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils'
 import { Astroid, Code, Menu, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CategoryBadgeGroup } from '@/components/category-badge-group'
 import { useBadgeSelection } from '@/hooks/use-badge-selection'
 import { useSelection } from '@/context/selection-context'
 import { CategorySidebar } from '@/components/category-sidebar'
@@ -20,11 +19,6 @@ const MOBILE_BREAKPOINT = 1024
 
 function isMobileViewport() {
    return window.innerWidth < MOBILE_BREAKPOINT
-}
-
-function scrollScrollAreaToTop(scrollAreaRef: React.RefObject<HTMLDivElement | null>) {
-   const viewport = scrollAreaRef.current?.querySelector<HTMLDivElement>('[data-slot="scroll-area-viewport"]')
-   viewport?.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 export default function Page() {

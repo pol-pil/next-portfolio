@@ -1,3 +1,5 @@
+'use client'
+
 import { WorkItem } from '@/lib/definitions'
 import ItemTags from './item-tags'
 import ExtraMediaGrid from './extra-media-grid'

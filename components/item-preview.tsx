@@ -1,3 +1,5 @@
+'use client'
+
 import { WorkItem } from '@/lib/definitions'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'

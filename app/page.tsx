@@ -24,7 +24,6 @@ export default function Home() {
    const { theme } = useTheme()
    const { setSelectedItemId } = useSelection()
    const { badgeContainerRef } = useBadgeSelection()
-   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
    const [hoveredItem, setHoveredItem] = useState<WorkItem | null>(null)
    const meshColors = hoveredItem?.color ? [hoveredItem.color, hoveredItem.color, '#000000'] : DEFAULT_MESH_COLORS
    const [layers, setLayers] = useState<[WorkItem | null, WorkItem | null]>([null, null])
@@ -95,11 +94,11 @@ export default function Home() {
             baseItemSize={isMobile ? 42 : 50}
             magnification={isMobile ? 44 : 58}
          />
-         <div ref={badgeContainerRef} className='fixed inset-y-0 pr-2 right-0 z-10 flex items-center'>
+         <div className='fixed inset-y-0 pr-2 right-0 z-10 flex items-center'>
             <CategorySidebar
                sidebarCategories={homeCategories}
                activeItemId=''
-               isCategoriesOpen={isCategoriesOpen}
+               isCategoriesOpen={false}
                badgeContainerRef={badgeContainerRef}
                onSelectItem={handleSelect}
                onHoverItem={setHoveredItem}
@@ -110,10 +109,10 @@ export default function Home() {
             <MeshGradient colors={meshColors} speed={2} />
          </div>
 
-         <div className='relative flex flex-col gap-6 justify-end h-dvh mx-4 lg:mx-40'>
-            <div className='flex justify-end'>
+         <div className='relative flex flex-col gap-6 justify-end h-dvh mx-4 lg:mx-40 min-h-0'>
+            <div className='flex justify-end min-h-0'>
                <div
-                  className='relative w-2xl overflow-hidden rounded-lg transition-opacity duration-500 ease-in-out'
+                  className='relative overflow-hidden rounded-lg transition-opacity mt-4 duration-500 ease-in-out h-[28dvh] sm:h-[34dvh] lg:h-[42dvh] max-w-full'
                   style={{ aspectRatio: 16 / 9, opacity: hoveredItem ? 1 : 0 }}
                >
                   {layers.map((item, i) => (
@@ -127,8 +126,8 @@ export default function Home() {
                   ))}
                </div>
             </div>
-            <div className='flex mb-24'>
-               <div className='w-sm lg:w-3xl'>
+            <div className='flex mb-24 min-h-0'>
+               <div className='h-auto w-3xl lg:h-[40dvh] lg:w-auto max-w-full'>
                   <Heroname mode={theme === 'light' ? 'light' : 'dark'} />
                </div>
             </div>

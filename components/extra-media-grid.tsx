@@ -1,7 +1,9 @@
-import { WorkItem } from "@/lib/definitions"
-import { useState } from "react"
-import { createPortal } from "react-dom"
-import { PhotoProvider, PhotoView } from "react-photo-view"
+'use client'
+
+import { WorkItem } from '@/lib/definitions'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
 
 export default function ExtraMediaGrid({ item }: { item: WorkItem }) {
    const [openVideo, setOpenVideo] = useState<string | null>(null)
