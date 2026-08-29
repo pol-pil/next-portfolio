@@ -13,7 +13,7 @@ export default function ExtraMediaGrid({ item }: { item: WorkItem }) {
    return (
       <>
          <PhotoProvider>
-            <div className='flex flex-row flex-wrap gap-2 pb-12 lg:pb-22 cursor-pointer'>
+            <div className='flex flex-row flex-wrap gap-4 pb-12 lg:pb-22 cursor-pointer'>
                {item.extra.map((src, index) => {
                   const isVideo = /\.(mp4|webm|mov|ogg)$/i.test(src)
 
@@ -22,7 +22,7 @@ export default function ExtraMediaGrid({ item }: { item: WorkItem }) {
                         <div
                            key={src}
                            onClick={() => setOpenVideo(src)}
-                           className='w-full flex-1 min-w-35 h-[12em] shadow-xl rounded-md overflow-hidden cursor-pointer'
+                           className='w-full flex-1 min-w-86 h-[24em] shadow-xl rounded-xl overflow-hidden cursor-pointer'
                         >
                            <video src={src} muted className='h-full w-full object-cover' />
                         </div>
@@ -34,7 +34,7 @@ export default function ExtraMediaGrid({ item }: { item: WorkItem }) {
                         <img
                            src={src}
                            alt={`${item.title} extra ${index + 1}`}
-                           className='w-full flex-1 min-w-45 h-[12em] shadow-xl rounded-md object-cover'
+                           className='w-full flex-1 min-w-86 h-[18em] lg:h-[24em] shadow-xl rounded-xl object-cover'
                         />
                      </PhotoView>
                   )

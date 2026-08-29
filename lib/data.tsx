@@ -42,7 +42,7 @@ export const workItems: WorkItem[] = [
          { label: 'Figma', icon: SiFigma },
          { label: 'Photoshop', icon: PhotoshopIcon },
       ],
-      aspectRatio: 16 / 9.6,
+      aspectRatio: 16 / 10,
       extra: ['/shp1.avif', '/shp2.avif', '/shp3.avif', '/shp4.avif', '/shp5.avif'],
       icon: '/slicehaus.svg',
       logo: '/shlogo.svg',
@@ -66,7 +66,7 @@ export const workItems: WorkItem[] = [
       embedUrl:
          'https://embed.figma.com/proto/zR7MV8n7ismhZS2bup8sMq/Virtual-Tour-App-for-Art-Gallery--Copy-?node-id=660-113&page-id=0%3A1&starting-point-node-id=660%3A113&scaling=scale-down-width&content-scaling=fixed&embed-host=share&hide-ui=1',
       tags: [{ label: 'Figma', icon: SiFigma }],
-      aspectRatio: 16 / 9.6,
+      aspectRatio: 16 / 10,
       extra: ['/asp1.avif', '/asp2.avif', '/asp3.avif', '/asp4.avif'],
       icon: '/artsphere.svg',
       flatlogo: '/aslogo.svg',

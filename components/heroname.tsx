@@ -1,56 +1,13 @@
- type Mode = "light" | "dark";
+'use client'
 
- const THEME_STYLES: Record<Mode, {
-   fillColor: string;
-   fillOpacity: number;
-   strokeColor: string;
-   strokeOpacity: number;
-   shadowColor: string;
-   shadowOpacity: number;
- }> = {
-   light: {
-     fillColor: "#0C8CE9",
-     fillOpacity: 0.4,
-     strokeColor: "#0C8CE9",
-     strokeOpacity: 0.6,
-     shadowColor: "#000000",
-     shadowOpacity: 0.1,
-   },
-   dark: {
-     fillColor: "#ffffff",
-     fillOpacity: 0.03,
-     strokeColor: "#ffffff",
-     strokeOpacity: 0.1,
-     shadowColor: "#ffffff",
-     shadowOpacity: 0.1,
-   },
- };
+import { useSvgTheme } from '@/hooks/use-svg-theme';
+import { THEME_STYLES, hexToRgb01 } from '@/lib/svg-theme-styles';
 
- function hexToRgb01(hex: string) {
-   const clean = hex.replace("#", "");
-   const bigint = parseInt(clean, 16);
-   const r = ((bigint >> 16) & 255) / 255;
-   const g = ((bigint >> 8) & 255) / 255;
-   const b = (bigint & 255) / 255;
-   return { r, g, b };
- }
- 
- export default function Heroname({
-   mode = "light",
- }: {
-   mode?: Mode;
- }) {
-   const {
-     fillColor,
-     fillOpacity,
-     strokeColor,
-     strokeOpacity,
-     shadowColor,
-     shadowOpacity,
-   } = THEME_STYLES[mode];
- 
-   const { r, g, b } = hexToRgb01(shadowColor);
- 
+export default function Heroname({ defaultMode = "dark" as const } = {}) {
+  const mode = useSvgTheme(defaultMode);
+  const { fillColor, fillOpacity, strokeColor, strokeOpacity, shadowColor, shadowOpacity } = THEME_STYLES[mode];
+  const { r, g, b } = hexToRgb01(shadowColor);
+
    return (
      <svg width="100%" height="auto" viewBox="0 0 756 370" fill="none" xmlns="http://www.w3.org/2000/svg">
        <foreignObject x="-10" y="-10" width="775.109" height="389.945">
@@ -158,7 +115,6 @@
           <feOffset dx={2} dy={2} />
           <feGaussianBlur stdDeviation={2} />
           <feComposite in2="hardAlpha" operator="arithmetic" k2={-1} k3={1} />
-          {/* Shadow color/opacity now driven by props */}
           <feColorMatrix
             type="matrix"
             values={`0 0 0 0 ${r} 0 0 0 0 ${g} 0 0 0 0 ${b} 0 0 0 ${shadowOpacity} 0`}

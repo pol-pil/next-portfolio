@@ -25,7 +25,7 @@ type CategorySidebarProps = {
  }: CategorySidebarProps) {
     return (
       <div className='fixed right-0 bottom-16 z-20 lg:static lg:translate-y-0 pointer-events-none'>
-         <ScrollArea
+         <ScrollArea data-lenis-prevent
             className={cn(
                'transition-all duration-300 lg:[&_[data-slot=scroll-area-viewport]]:[mask-image:linear-gradient(to_bottom,transparent,black_180px,black_calc(100%-200px),transparent)] [&_[data-slot=scroll-area-scrollbar]]:hidden',
                'fixed bottom-0 z-20 w-fit max-h-[70vh]',

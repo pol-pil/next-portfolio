@@ -5,14 +5,19 @@ import Dock from '@/components/Dock'
 import Heroname from '@/components/heroname'
 import MeshGradient from '@/components/mesh-gradient'
 import ProfilePopover from '@/components/profile-popover'
+import Visualsname from '@/components/visualsname'
+import { Skiper30 } from '@/components/ui/skiper-ui/skiper30'
 import { useSelection } from '@/context/selection-context'
 import { useBadgeSelection } from '@/hooks/use-badge-selection'
 import { getItemsByCategory, workItems } from '@/lib/data'
 import { WorkItem } from '@/lib/definitions'
-import { Eye } from 'lucide-react'
+import { ArrowUpRight, Eye } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { HorizontalScroll } from '@/components/horizontal-scroll'
+import { HorizontalPinScroll } from '@/components/horizontal-pin-scroll'
+import Projectsname from '@/components/projectsname'
 
 const homeItems = workItems.filter((item) => item.section === 'visuals')
 const homeCategories = getItemsByCategory(homeItems)
@@ -86,15 +91,20 @@ export default function Home() {
    ]
 
    return (
-      <div className='relative'>
-         <Dock
-            items={tabs}
-            className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`}
-            panelHeight={isMobile ? 60 : 68}
-            baseItemSize={isMobile ? 42 : 50}
-            magnification={isMobile ? 44 : 58}
-         />
-         <div className='fixed inset-y-0 pr-2 right-0 z-10 flex items-center'>
+      <>
+         <div className='fixed w-full h-dvh opacity-0 dark:opacity-25'>
+            <MeshGradient colors={meshColors} speed={1} />
+         </div>
+         <div className='relative'>
+            <Dock
+               items={tabs}
+               className={`fixed z-20 dark:border-[1px] border-none shadow-xl text-white transition-all duration-300 border border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`}
+               panelHeight={isMobile ? 60 : 68}
+               baseItemSize={isMobile ? 42 : 50}
+               magnification={isMobile ? 44 : 58}
+            />
+
+            {/* <div className='fixed inset-y-0 pr-2 right-0 z-10 flex items-center'>
             <CategorySidebar
                sidebarCategories={homeCategories}
                activeItemId=''
@@ -103,35 +113,127 @@ export default function Home() {
                onSelectItem={handleSelect}
                onHoverItem={setHoveredItem}
             />
-         </div>
+         </div> */}
 
-         <div className='absolute w-full h-full opacity-0 dark:opacity-20'>
-            <MeshGradient colors={meshColors} speed={2} />
-         </div>
-
-         <div className='relative flex flex-col gap-6 justify-end h-dvh mx-4 lg:mx-40 min-h-0'>
-            <div className='flex justify-end min-h-0'>
-               <div
-                  className='relative overflow-hidden rounded-lg transition-opacity mt-4 duration-500 ease-in-out h-[28dvh] sm:h-[34dvh] lg:h-[42dvh] max-w-full'
-                  style={{ aspectRatio: 16 / 9, opacity: hoveredItem ? 1 : 0 }}
+            <div className='relative flex flex-col gap-6 justify-end h-dvh mx-4 lg:mx-40 min-h-0'>
+               <div className='absolute inset-y-0 -right-38 z-10 flex items-center'>
+                  <CategorySidebar
+                     sidebarCategories={homeCategories}
+                     activeItemId=''
+                     isCategoriesOpen={false}
+                     badgeContainerRef={badgeContainerRef}
+                     onSelectItem={handleSelect}
+                     onHoverItem={setHoveredItem}
+                  />
+               </div>
+               <div className='flex justify-end min-h-0'>
+                  <div
+                     className='relative overflow-hidden rounded-lg transition-opacity mt-4 duration-500 ease-in-out h-[28dvh] sm:h-[34dvh] lg:h-[42dvh] max-w-full'
+                     style={{ aspectRatio: 16 / 9, opacity: hoveredItem ? 1 : 0 }}
+                  >
+                     {layers.map((item, i) => (
+                        <img
+                           key={i}
+                           className='absolute inset-0 h-full w-full object-cover rounded-lg transition-opacity duration-500 ease-in-out'
+                           style={{ opacity: activeLayer === i ? 1 : 0 }}
+                           src={item ? item.mockup || item.image : undefined}
+                           alt={item?.alt ?? ''}
+                        />
+                     ))}
+                  </div>
+               </div>
+               <div className='flex mb-24 min-h-0'>
+                  <div className='h-auto w-md lg:h-[40dvh] lg:w-auto max-w-full'>
+                     <Heroname />
+                  </div>
+               </div>
+            </div>
+            <Skiper30 />
+            <div className='relative'>
+               <HorizontalPinScroll
+                  className='w-full dark:bg-black/60'
+                  fixed={
+                     <div className='flex flex-col items-center lg:gap-4'>
+                        <div className='h-auto w-sm lg:w-[50dvw] p-4 max-w-full'>
+                           <Visualsname />
+                        </div>
+                        <p className='lg:text-sm text-xs w-70 lg:w-80 text-muted-foreground text-center'>
+                           Web and mobile designs built with the user experience in mind, made to stand out.
+                        </p>
+                     </div>
+                  }
                >
-                  {layers.map((item, i) => (
-                     <img
-                        key={i}
-                        className='absolute inset-0 h-full w-full object-cover rounded-lg transition-opacity duration-500 ease-in-out'
-                        style={{ opacity: activeLayer === i ? 1 : 0 }}
-                        src={item ? item.mockup || item.image : undefined}
-                        alt={item?.alt ?? ''}
-                     />
-                  ))}
-               </div>
-            </div>
-            <div className='flex mb-24 min-h-0'>
-               <div className='h-auto w-3xl lg:h-[40dvh] lg:w-auto max-w-full'>
-                  <Heroname mode={theme === 'light' ? 'light' : 'dark'} />
-               </div>
+                  <div className='flex gap-16 px-16 lg:px-30'>
+                     <div className='flex flex-col gap-14 border rounded-4xl backdrop-blur-sm bg-white/2 size-[92dvw] lg:size-[70dvh] items-center justify-center shrink-0'>
+                        <img className='h-[46dvw] lg:h-[34dvh] rounded-xl lg:rounded-3xl lg:mt-30 shadow-xl' src='/shmock.avif' />
+                        <div className='lg:flex hidden opacity-0 hover:opacity-100 transition-all cursor-pointer flex-row items-center transition-all p-4 rounded-xl border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'>
+                           <p>Slicehaus</p>
+                           <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
+                        </div>
+                     </div>
+                     <div className='flex flex-col gap-14 border rounded-4xl backdrop-blur-sm bg-white/2 size-[92dvw] lg:size-[70dvh] items-center justify-center shrink-0'>
+                        <img className='h-[46dvw] lg:h-[34dvh] dark:border rounded-xl lg:rounded-3xl lg:mt-30 shadow-xl' src='/asmock.avif' />
+                        <div className='lg:flex hidden opacity-0 hover:opacity-100 transition-all cursor-pointer flex-row items-center p-4 rounded-xl border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'>
+                           <p>ArtSphere</p>
+                           <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
+                        </div>
+                     </div>
+                     <div className='flex flex-col gap-2 lg:gap-4 border rounded-4xl backdrop-blur-sm bg-white/2 size-[92dvw] lg:size-[70dvh] items-center justify-center shrink-0 mr-300'>
+                        <div className='overflow-hidden lg:mt-12 rounded-2xl lg:rounded-4xl shadow-xl border-5 border-black/80'>
+                           <video autoPlay muted className='h-[68dvw] lg:h-[45dvh] scale-102' src='/bbvid.mp4' />
+                        </div>
+                        <div className='lg:flex hidden opacity-0 hover:opacity-100 transition-all cursor-pointer flex-row items-center p-4 rounded-xl border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'>
+                           <p>BondBook</p>
+                           <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
+                        </div>
+                     </div>
+                  </div>
+               </HorizontalPinScroll>
+               <HorizontalPinScroll
+                  className='w-full dark:bg-black/60'
+                  fixed={
+                     <div className='flex flex-col items-center lg:gap-4'>
+                        <div className='h-auto w-sm lg:w-[50dvw] p-4 max-w-full'>
+                           <Projectsname />
+                        </div>
+                        <p className='text-xs lg:text-sm w-70 lg:w-80 text-muted-foreground text-center'>
+                           Web and mobile applications built with purpose, designed to perform and deliver.
+                        </p>
+                     </div>
+                  }
+               >
+                  <div className='flex gap-16 px-16 lg:px-30'>
+                     <div className='flex flex-col gap-14 border rounded-4xl backdrop-blur-sm bg-white/2 size-[92dvw] lg:size-[70dvh] items-center justify-center shrink-0'>
+                        <div className='overflow-hidden lg:mt-26 rounded-xl lg:rounded-2xl shadow-xl'>
+                           <video autoPlay muted className='h-[48dvw] lg:h-[36dvh] scale-101' src='/eresqsummary.mp4' />
+                        </div>
+                        <div className='lg:flex hidden opacity-0 hover:opacity-100 transition-all cursor-pointer flex-row items-center transition-all p-4 rounded-xl border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'>
+                           <p>e-ResQ</p>
+                           <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
+                        </div>
+                     </div>
+                     <div className='flex flex-col gap-14 border rounded-4xl backdrop-blur-sm bg-white/2 size-[92dvw] lg:size-[70dvh] items-center justify-center shrink-0'>
+                        <div className='overflow-hidden lg:mt-26 rounded-xl lg:rounded-2xl shadow-xl'>
+                           <video autoPlay muted className='h-[50dvw] lg:h-[38dvh] scale-101' src='/casapreview.mp4' />
+                        </div>
+                        <div className='lg:flex hidden opacity-0 hover:opacity-100 transition-all cursor-pointer flex-row items-center p-4 rounded-xl border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'>
+                           <p>Hotel Management</p>
+                           <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
+                        </div>
+                     </div>
+                     <div className='flex flex-col gap-2 lg:gap-4 border rounded-4xl backdrop-blur-sm bg-white/2 size-[92dvw] lg:size-[70dvh] items-center justify-center shrink-0 mr-300'>
+                        <div className='overflow-hidden lg:mt-12 rounded-2xl lg:rounded-4xl shadow-xl border-5 border-black/80'>
+                           <video autoPlay muted className='h-[64dvw] lg:h-[45dvh] scale-100' src='/ipundar.mp4' />
+                        </div>
+                        <div className='lg:flex hidden opacity-0 hover:opacity-100 transition-all cursor-pointer flex-row items-center p-4 rounded-xl border-black/10 dark:border-white/10 bg-zinc-100/60 dark:bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]'>
+                           <p>iPundar</p>
+                           <ArrowUpRight className='inline-block size-4 ml-1 align-middle' />
+                        </div>
+                     </div>
+                  </div>
+               </HorizontalPinScroll>
             </div>
          </div>
-      </div>
+      </>
    )
 }

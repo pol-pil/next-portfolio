@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { GripHorizontal, RefreshCcw } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -195,23 +195,25 @@ export const ThemeToggleButton1 = ({
 //..................................................... //
 export const ThemeToggleButton2 = ({
   className = '',
+  isDark: controlledIsDark,
+  onClick,
 }: {
-  className?: string
+  className?: string;
+  isDark?: boolean;
+  onClick?: () => void;
 }) => {
-  const [isDark, setIsDark] = useState(false); // safe default, no `document` access at render time
+  const [uncontrolledIsDark, setUncontrolledIsDark] = useState(false);
+  const isControlled = controlledIsDark !== undefined;
+  const isDark = controlledIsDark ?? uncontrolledIsDark;
 
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark')); // set actual value after mount, client-only
+  const handleClick = () => {
+    if (isControlled) {
+      onClick?.();
+      return;
+    }
 
-    const observer = new MutationObserver(() => {
-       setIsDark(document.documentElement.classList.contains('dark'))
-    })
-    observer.observe(document.documentElement, {
-       attributes: true,
-       attributeFilter: ['class'],
-    })
-    return () => observer.disconnect()
-  }, [])
+    setUncontrolledIsDark((current) => !current);
+  };
 
   return (
     <button
@@ -221,7 +223,7 @@ export const ThemeToggleButton2 = ({
         isDark ? "bg-black text-white" : "bg-white text-black",
         className,
       )}
-      onClick={() => setIsDark(!isDark)}
+      onClick={handleClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

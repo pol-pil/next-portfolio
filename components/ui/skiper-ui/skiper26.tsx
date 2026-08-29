@@ -458,7 +458,7 @@ export const useThemeToggle = ({
   blur?: boolean;
   gifUrl?: string;
 } = {}) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const [isDark, setIsDark] = useState(false);
 
@@ -493,7 +493,7 @@ export const useThemeToggle = ({
     if (typeof window === "undefined") return;
 
     const switchTheme = () => {
-      setTheme(theme === "light" ? "dark" : "light");
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
     };
 
     if (!document.startViewTransition) {
@@ -503,7 +503,7 @@ export const useThemeToggle = ({
 
     document.startViewTransition(switchTheme);
   }, [
-    theme,
+    resolvedTheme,
     setTheme,
     variant,
     start,

@@ -1,0 +1,105 @@
+'use client'
+
+import { motion, MotionValue, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+
+const images = [
+   '/small/wpv.avif',
+   '/small/cpv.avif',
+   '/small/tdv.avif',
+   '/small/wwv.avif',
+   '/small/rpv.avif',
+   '/small/jpv.avif',
+   '/small/npv.avif',
+   '/small/jlpv.avif',
+   '/small/crpv.avif',
+   '/small/kv.avif',
+   '/small/ppv.avif',
+   '/small/wlv.avif',
+   '/small/mpv.avif',
+]
+
+const Skiper30 = () => {
+   const gallery = useRef<HTMLDivElement>(null)
+   const [dimension, setDimension] = useState({ width: 0, height: 0 })
+
+   const { scrollYProgress } = useScroll({
+      target: gallery,
+      offset: ['start end', 'end start'],
+   })
+
+   const { height } = dimension
+   const y = useTransform(scrollYProgress, [0, 1], [0, height * 2])
+   const y2 = useTransform(scrollYProgress, [0, 1], [0, height * 3.3])
+   const y3 = useTransform(scrollYProgress, [0, 1], [0, height * 1.25])
+   const y4 = useTransform(scrollYProgress, [0, 1], [0, height * 3])
+
+   useEffect(() => {
+      const resize = () => {
+         setDimension({ width: window.innerWidth, height: window.innerHeight })
+      }
+
+      window.addEventListener('resize', resize)
+      resize()
+
+      return () => {
+         window.removeEventListener('resize', resize)
+      }
+   }, [])
+
+   return (
+      <main className='w-full text-black'>
+         <div ref={gallery} className='relative box-border flex h-[175vh] gap-[2vw] overflow-hidden p-[2vw]'>
+            <Column images={[images[0], images[1], images[2]]} y={y} />
+            <Column images={[images[3], images[4], images[5]]} y={y2} />
+            <Column images={[images[6], images[7], images[8]]} y={y3} />
+            <Column images={[images[9], images[10], images[11]]} y={y4} />
+         </div>
+      </main>
+   )
+}
+
+type ColumnProps = {
+   images: string[]
+   y: MotionValue<number>
+}
+
+const Column = ({ images, y }: ColumnProps) => {
+   return (
+      <motion.div
+         className='relative -top-[45%] flex h-full w-1/4 min-w-[50px] flex-col gap-[2vw] first:top-[-45%] [&:nth-child(2)]:top-[-95%] [&:nth-child(3)]:top-[-45%] [&:nth-child(4)]:top-[-75%]'
+         style={{ y }}
+      >
+         {images.map((src, i) => (
+            <div key={i} className='relative h-full w-full overflow-hidden'>
+               <img src={`${src}`} alt='image' className='pointer-events-none object-cover' />
+            </div>
+         ))}
+      </motion.div>
+   )
+}
+
+export { Skiper30 }
+
+/**
+ * Skiper 30 Parallax_002 — React + framer motion + lenis
+ * Inspired by and adapted from https://www.siena.film/films/my-project-x
+ * We respect the original creators. This is an inspired rebuild with our own taste and does not claim any ownership.
+ * These animations aren't associated with the siena.film . They're independent recreations meant to study interaction design
+ *
+ * License & Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.me
+ * Twitter: https://x.com/Gur__vi
+ *
+ * --- Fixes applied ---
+ * 1. Column 4 now uses images[9..11] instead of duplicating column 3's images[6..8].
+ * 2. The gallery uses the app's shared root Lenis instance, avoiding competing
+ *    scroll engines and duplicate animation loops.
+ */

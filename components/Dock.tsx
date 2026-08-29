@@ -97,7 +97,7 @@ function DockItem({
                ? 'bg-transparent shadow-none border-none'
                : isActive
                ? 'dark:bg-neutral-200 dark:text-neutral-900 text-neutral-200'
-               : 'bg-white text-neutral-900 dark:bg-neutral-900/90 dark:text-white'
+               : 'bg-white/60 text-neutral-900 dark:bg-neutral-900/60 dark:text-white'
          } ${className}`}
          tabIndex={0}
          role='button'

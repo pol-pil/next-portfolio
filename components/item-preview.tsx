@@ -83,7 +83,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
    const thumbnailOverlay = (
       <div
          className={cn(
-            'absolute inset-0 z-2 overflow-hidden rounded-lg transition-opacity duration-400',
+            'absolute inset-0 z-2 overflow-hidden rounded-xl transition-opacity duration-400',
             isLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
          )}
       >
@@ -100,7 +100,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
    const fullscreenButton = isLoaded && (
       <Button
          onClick={toggleFullscreen}
-         className='absolute bottom-2 right-2 z-10 rounded-md bg-black/50 p-1.5 text-white backdrop-blur-sm hover:bg-black/70'
+         className='absolute bottom-2 right-2 z-10 rounded-xl bg-black/50 p-1.5 text-white backdrop-blur-sm hover:bg-black/70'
       >
          {isFullscreen ? <Minimize className='size-4' /> : <Maximize className='size-4' />}
       </Button>
@@ -108,10 +108,10 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
 
    const embedPoster = (
       <div
-         className='relative h-full w-full cursor-pointer overflow-hidden rounded-lg'
+         className='relative h-full w-full cursor-pointer overflow-hidden rounded-xl'
          onClick={() => setShowEmbed(true)}
       >
-         <img src={item.thumbnail} alt={item.alt} className='h-full w-full object-cover rounded-lg' />
+         <img src={item.thumbnail} alt={item.alt} className='h-full w-full object-cover rounded-xl' />
       </div>
    )
 
@@ -135,14 +135,14 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                            background: 'black',
                         }),
                      }}
-                     className='overflow-hidden rounded-lg'
+                     className='overflow-hidden rounded-xl'
                   >
                      {showEmbed && item.embedUrl ? (
                         <>
                            {thumbnailOverlay}
                            <iframe
                               ref={iframeRef}
-                              className='h-full w-full rounded-lg'
+                              className='h-full w-full rounded-xl'
                               src={item.embedUrl}
                               title={item.title}
                            />
@@ -150,7 +150,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                         </>
                      ) : (
                         <div
-                           className='h-full w-full cursor-pointer overflow-hidden rounded-lg'
+                           className='h-full w-full cursor-pointer overflow-hidden rounded-xl'
                            onClick={() => setPopOpen(true)}
                         >
                            <video
@@ -169,7 +169,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
             ) : (
                <div
                   ref={containerRef}
-                  className='w-full overflow-hidden rounded-lg relative'
+                  className='w-full overflow-hidden rounded-xl relative'
                   style={{ aspectRatio: item.aspectRatio }}
                >
                   {showEmbed && item.embedUrl ? (
@@ -177,7 +177,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                         {thumbnailOverlay}
                         <iframe
                            ref={iframeRef}
-                           className='h-full w-full rounded-lg'
+                           className='h-full w-full rounded-xl'
                            src={item.embedUrl}
                            title={item.title}
                         />
@@ -211,7 +211,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                         controls
                         autoPlay
                         playsInline
-                        className='max-w-[90vw] max-h-[90vh] rounded-md'
+                        className='max-w-[90vw] max-h-[90vh] rounded-xl'
                         onClick={(e) => e.stopPropagation()}
                      />
                   </div>,
@@ -255,7 +255,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                            {thumbnailOverlay}
                            <iframe
                               ref={iframeRef}
-                              className='rounded-lg'
+                              className='rounded-xl'
                               style={{ height: '100%', width: '100%' }}
                               src={item.embedUrl}
                               title={item.title}
@@ -270,7 +270,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
             ) : (
                <div
                   ref={containerRef}
-                  className='w-full overflow-hidden rounded-lg'
+                  className='w-full overflow-hidden rounded-xl'
                   style={{ position: 'relative', aspectRatio: item.aspectRatio }}
                >
                   {showEmbed ? (
@@ -278,7 +278,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                         {thumbnailOverlay}
                         <iframe
                            ref={iframeRef}
-                           className='h-full w-full rounded-lg'
+                           className='h-full w-full rounded-xl'
                            src={item.embedUrl}
                            title={item.title}
                         />
@@ -294,7 +294,7 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
                <PhotoProvider>
                   <PhotoView src={item.image}>
                      <img
-                        className='rounded-lg object-contain cursor-pointer'
+                        className='rounded-xl object-contain cursor-pointer'
                         style={{
                            height: 'min(86vh, 90vw / ' + item.aspectRatio + ')',
                            width: `min(90vw, min(86vh, 90vw / ${item.aspectRatio}) * ${item.aspectRatio})`,
@@ -308,8 +308,8 @@ export default function ItemPreview({ item }: { item: WorkItem }) {
          ) : (
             <PhotoProvider>
                <PhotoView src={item.image}>
-                  <div className='w-full overflow-hidden rounded-lg' style={{ aspectRatio: item.aspectRatio }}>
-                     <img className='h-full w-full object-cover rounded-lg' src={item.image} alt={item.alt} />
+                  <div className='w-full overflow-hidden rounded-xl' style={{ aspectRatio: item.aspectRatio }}>
+                     <img className='h-full w-full object-cover rounded-xl' src={item.image} alt={item.alt} />
                   </div>
                </PhotoView>
             </PhotoProvider>

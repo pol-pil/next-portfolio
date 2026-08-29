@@ -22,8 +22,8 @@ export default function ItemMeta({
 }) {
    return (
       <div className='flex flex-col gap-6 border-none text-foreground/80'>
-         <div className='flex flex-row p-4 pt-8 justify-between items-center'>
-            <div className='max-w-[70%] flex items-center gap-4'>
+         <div className='flex flex-col gap-4 lg:flex-row p-4 pt-8 lg:justify-between lg:items-center'>
+            <div className=' flex items-center gap-4'>
                {(item.logo || item.flatlogo) && (
                   <img
                      src={item.flatlogo || item.logo}
@@ -58,7 +58,7 @@ export default function ItemMeta({
                   </div>
                </div>
             </div>
-            <div className='flex items-center gap-3'>
+            <div className='flex gap-2 justify-end'>
                <ItemTags item={item} />
                {showViewButton && (
                   <Tooltip>

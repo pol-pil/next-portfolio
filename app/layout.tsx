@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Analytics } from '@vercel/analytics/react'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { SelectionProvider } from '@/context/selection-context'
+import LenisProvider from '@/components/smooth-scroll'
 
 const geistSans = Geist({
    variable: '--font-geist-sans',
@@ -38,7 +39,9 @@ export default function RootLayout({
             <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
                <TooltipProvider>
                   <Analytics />
+                  <LenisProvider>
                   <SelectionProvider>{children}</SelectionProvider>
+                  </LenisProvider>
                </TooltipProvider>
             </ThemeProvider>
          </body>

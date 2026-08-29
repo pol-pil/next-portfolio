@@ -136,7 +136,7 @@ export default function Page() {
             <Tabs value={activeSection} onValueChange={handleSectionChange} className='h-full'>
                {sections.map((section) => (
                   <TabsContent key={section.id} value={section.id} className='min-h-0'>
-                     <ScrollArea
+                     <ScrollArea data-lenis-prevent
                         ref={scrollRef}
                         className='h-full w-full
                            [&_[data-slot=scroll-area-viewport]]:sm:px-8
