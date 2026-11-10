@@ -73,7 +73,7 @@ export default function ProfilePopover({
                </Button>
                <Button
                   onClick={() => {
-                     window.location.href = 'tel:+639913763775'
+                     window.location.href = 'tel:+63912345678'
                   }}
                   className='flex-1 rounded-lg bg-neutral-100 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-200 cursor-pointer'
                >
